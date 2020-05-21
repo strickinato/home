@@ -2,6 +2,7 @@
 
 let
   relativeXDGDataPath = ".local/share";
+
 in
 {
   programs.home-manager.enable = true;
@@ -60,7 +61,12 @@ in
 
 
 
-
+  home.packages = with pkgs; [
+    entr
+    exercism
+    tldr
+    nmap
+  ];
 
 
 
