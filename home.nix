@@ -71,6 +71,7 @@ in
     exercism
     tldr
     nmap
+    fzf
   ];
 
 
