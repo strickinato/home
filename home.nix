@@ -5,7 +5,11 @@ let
 
 in
 {
-  programs.home-manager.enable = true;
+
+  programs.home-manager = {
+    enable = true;
+    path = "$HOME/home";
+};
 
   programs.bat.enable = true;
   programs.jq.enable = true;
@@ -62,14 +66,12 @@ in
 
 
   home.packages = with pkgs; [
+    zsh
     entr
     exercism
     tldr
     nmap
   ];
-
-
-
 
 
 
