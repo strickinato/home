@@ -7,3 +7,4 @@ cask install iterm2
 cask install shortcat
 cask install zulip
 cask install docker
+cask install bitwarden
