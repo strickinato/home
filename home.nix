@@ -29,12 +29,13 @@
 
 
   home.packages = with pkgs; [
-    zsh
     entr
     exercism
-    tldr
-    nmap
     fzf
+    graphviz
+    nmap
+    tldr
+    zsh
   ];
 
 
