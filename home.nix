@@ -4,6 +4,7 @@
 
   imports = [
     ./zsh.nix
+    ./emacs.nix
   ];
 
   programs.home-manager = {

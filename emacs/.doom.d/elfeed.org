@@ -1,0 +1,51 @@
+#+TITLE: Elfeed
+* Blogs :elfeed:
+** Linux        :linux:
+*** https://lukesmith.xyz/rss.xml
+*** https://icyphox.sh/blog/feed.xml
+*** https://blog.cynthia.re/rss.xml
+** Programming :programming:
+*** https://christine.website/blog.rss
+*** https://cli.fan/posts/index.xml
+*** https://joshwcomeau.com/rss.xml
+*** https://buttondown.email/jaredpereira/rss
+*** https://julian.digital/feed/
+*** https://doronrasis.com/feed.xml
+*** https://aaronstrick.com/rss.xml
+** Org, etc. :emacs:
+*** https://patrickskiba.com/feed.xml
+*** https://rgoswami.me/posts/index.xml
+*** https://www.ryanprior.com/posts/index.xml
+*** https://jesseevers.com/feed.xml
+** Hardware :hardware:
+https://n-o-d-e.net/rss/rss.xml
+** https://thelocalyarn.com/feed/
+** Publications
+*** https://pudding.cool/feed/index.xml
+** Rust :rust:
+*** https://k155la3.blog/posts/index.xml
+** Frontend :frontend:
+*** https://ishadeed.com/feed.xml
+*** https://dutzi.party/rss.xml
+*** https://aless.co/rss.xml
+** Infra
+*** https://grahamc.com/feed/
+*** https://blog.balthazar-rouberol.com/feeds/all.atom.xml
+** elm
+*** https://mattbrandly.com/rss/
+*** https://bytes.zone/posts/index.xml
+*** https://kofi.sexy/feed.xml
+** Emacs
+*** https://www.diegoberrocal.com/atom.xml
+*** https://notes.rolandcrosby.com/index.xml
+** Internet
+*** https://subpixel.space/feed.xml
+*** http://pketh.org/feed.xml
+** Homeys
+*** https://cozy.computer/feed.xml
+** Geometry
+** https://simblob.blogspot.com/feeds/posts/default
+** http://feeds.feedburner.com/dubroy?format=xml
+** https://blog.veitheller.de/feed.rss
+** https://macwright.org/rss.xml
+** https://routley.io/posts/index.xml
