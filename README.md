@@ -83,6 +83,24 @@ git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
 ~/.emacs.d/bin/doom install
 ```
 
+# Setting up the apps
+
+### Using brew and the Brewfile
+
+[From their site](https://brew.sh)
+
+``` sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+cd $HOME
+brew bundle
+
+```
+
+
+
+
+
 
 # Rebuilding
 

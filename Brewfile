@@ -1,10 +1,10 @@
-install caskroom/cask/brew-cask
+tap "homebrew/cask" 
 
-cask install slack
-cask install google-chrome
-cask install spotify
-cask install iterm2
-cask install shortcat
-cask install zulip
-cask install docker
-cask install bitwarden
+cask "alfred"
+cask "bitwarden"
+cask "docker"
+cask "iterm2"
+cask "google-chrome"
+cask "spotify"
+cask "shortcat"
+cask "zulip"
