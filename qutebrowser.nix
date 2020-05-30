@@ -26,11 +26,20 @@
 
       c.url.searchengines = {
         "DEFAULT": "https://duckduckgo.com/?q={}",
-        "w": "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1",
-        "nw": "https://nixos.wiki/index.php?search={}",
-        "r": "https://www.reddit.com/search/?q={}",
+        'i': 'https://duckduckgo.com/?q={}&iar=images&iax=images&ia=images',
+        'wiki': 'https://www.wikipedia.org/search-redirect.php?family=wikipedia&language=en&search={}&language=en&go=Go',
+        "red": "https://www.reddit.com/search/?q={}",
+        "yt": 'https://www.youtube.com/results?search_query={}',
+        "m": "https://www.google.com/maps?hl=en&q={}",
       }
 
+      # Make it work like helm
+      config.bind('<Ctrl-K>', 'completion-item-focus prev', mode='command')
+      config.bind('<Ctrl-J>', 'completion-item-focus next', mode='command')
+
+      # I often want to just edit the url
+      config.bind('p', 'set-cmd-text :open {url}')
+      config.bind('P', 'set-cmd-text :open -t {url}')
 
       c.colors.webpage.prefers_color_scheme_dark = True
       c.fonts.default_size = "16pt"
@@ -60,11 +69,11 @@
       # set qutebrowser colors
 
       # Text color of the completion widget. May be a single color to use for
-      # all columns or a list of three colors, one for each column.
-      c.colors.completion.fg = base05
+      # all columns or a list of three colors, one for each column. (# was base05)
+      c.colors.completion.fg = base0F
 
-      # Background color of the completion widget for odd rows.
-      c.colors.completion.odd.bg = base03
+      # Background color of the completion widget for odd rows. (# was base03)
+      c.colors.completion.odd.bg = base01
 
       # Background color of the completion widget for even rows.
       c.colors.completion.even.bg = base00
