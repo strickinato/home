@@ -5,6 +5,7 @@
   imports = [
     ./zsh.nix
     ./emacs.nix
+    ./qutebrowser.nix
   ];
 
   programs.home-manager = {
@@ -27,7 +28,6 @@
         credential.helper = "osxkeychain";
       };
     };
-
 
   home.packages = with pkgs; [
     entr
