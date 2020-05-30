@@ -28,6 +28,7 @@
         "DEFAULT": "https://duckduckgo.com/?q={}",
         "w": "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1",
         "nw": "https://nixos.wiki/index.php?search={}",
+        "r": "https://www.reddit.com/search/?q={}",
       }
 
 
