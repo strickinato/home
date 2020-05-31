@@ -33,6 +33,9 @@
     entr
     exercism
     fzf
+    hledger
+    hledger-ui
+    hledger-web
     graphviz
     nmap
     tldr
