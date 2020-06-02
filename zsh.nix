@@ -7,7 +7,7 @@ let
   ];
 
   extraInitExtra =
-    builtins.foldl' (soFar: new: soFar + "\n" + builtins.readFile new) ""
+    builtins.foldl' (acc: func: acc + "\n" + builtins.readFile func) ""
     extras;
 in {
 
@@ -53,7 +53,12 @@ in {
     '';
 
     initExtra = ''
-      EDITOR=vim
+      alias ll="ls -la"
+
+      alias ..="cd .."
+      alias ...="cd ../.."
+      alias ....="cd ../../.."
+      alias .....="cd ../../../.."
 
     '' + extraInitExtra;
 
