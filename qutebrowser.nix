@@ -31,6 +31,7 @@
         "red": "https://www.reddit.com/search/?q={}",
         "yt": 'https://www.youtube.com/results?search_query={}',
         "m": "https://www.google.com/maps?hl=en&q={}",
+        "nx": "https://nixos.org/nixos/packages.html?channel=nixpkgs-unstable&query={}"
       }
 
       # Make it work like helm
