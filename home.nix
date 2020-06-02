@@ -29,13 +29,19 @@
       };
     };
 
+  home.sessionVariables = {
+    LEDGER_FILE = "$HOME/ledger/ledger.journal";
+    EDITOR = "vim";
+  };
+
   home.packages = with pkgs; [
-    entr
-    exercism
-    fzf
     hledger
     hledger-ui
     hledger-web
+
+    entr
+    exercism
+    fzf
     graphviz
     nmap
     tldr
@@ -44,6 +50,7 @@
 
 
 
+  news.notify = "silent";
 
 
 

@@ -51,8 +51,6 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 
 (package! graphviz-dot-mode)
-(package! zetteldeft)
-(package! org-jira)
 (package! md4rd
   :recipe (:host github :repo "ahungry/md4rd"))
 

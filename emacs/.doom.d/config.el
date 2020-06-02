@@ -1,20 +1,21 @@
-    (setq org-directory "~/Dropbox/zettel")
-    (setq +org-capture-todo-file "~/Dropbox/zettel/inbox/capture.org")
+(after! org
+  (setq org-directory "~/Dropbox/zettel")
+  (setq org-roam-directory "~/Dropbox/zettel")
+  (setq deft-directory "~/Dropbox/zettel")
+)
+
+    (setq org-default-notes-file
+          (concat org-directory "/inbox/notes.org"))
 
     (defun make-orgcapture-frame ()
         "Create a new frame and run org-capture."
         (interactive)
-        (make-frame '((name . "remember") (width . 80) (height . 16)
+        (make-frame '((name . "remember") (width . 120) (height . 32)
                         (top . 400) (left . 300)
-                        (font . "-apple-Monaco-medium-normal-normal-*-13-*-*-*-m-0-iso10646-1")
+                        (font . "-apple-Monaco-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1")
                     ))
         (select-frame-by-name "remember")
         (org-capture))
-
-(use-package! org-jira
-  :after org
-  :config
-  (setq jiralib-url "https://fictiv.atlassian.net"))
 
 (setq org-publish-project-alist
       '(
@@ -56,15 +57,19 @@
 (after! org
   (elfeed-org))
 
-(use-package! zetteldeft
-  :config
-  (setq deft-directory "~/Dropbox/zettel")
-)
-
 (use-package! graphviz-dot-mode)
+
+(defun strickinato/open-ledger ()
+  (interactive)
+  (find-file "~/ledger/2020.journal")
+  (end-of-buffer)
+  )
+
+(add-to-list 'auto-mode-alist '("\\.journal" . ledger-mode))
 
 (map!
     :leader
+    :desc "Open Ledger" :gn "n j" #'strickinato/open-ledger
     :desc "Launch Zetteldeft" :gn "n SPC" #'zetteldeft-deft-new-search
     :desc "New File" :gn "z n" #'zetteldeft-new-file
     :desc "New File and Link" :gn "z N" #'zetteldeft-deft-new-search-and-link

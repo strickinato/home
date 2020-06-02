@@ -99,7 +99,9 @@ brew bundle
 
 
 
+# Setting up ledger
 
+Expects a ~/ledger folder that has the prices, rules, and journal files, so symlink this in from dropbox for now
 
 
 # Rebuilding
