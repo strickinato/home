@@ -65,6 +65,9 @@
   (end-of-buffer)
   )
 
+(after! pinboard
+  (add-to-list 'auth-sources "~/.pinboard-auth" t))
+
 (add-to-list 'auto-mode-alist '("\\.journal" . ledger-mode))
 
 (map!

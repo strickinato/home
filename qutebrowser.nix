@@ -11,7 +11,11 @@
       c.statusbar.hide = False
 
       c.content.pdfjs = True
-      c.aliases = {}
+
+      c.aliases = {
+          # For saving things to pinboard
+          'pin': 'open -t https://pinboard.in/add?url={url}&title={title}'
+      }
 
       c.completion.shrink = False
       c.completion.use_best_match = True
@@ -41,6 +45,10 @@
       # I often want to just edit the url
       config.bind('p', 'set-cmd-text :open {url}')
       config.bind('P', 'set-cmd-text :open -t {url}')
+
+      # qutebrowser doesn't support h.264, so sometimes I need to open stuff up in chrome
+      # This is for macOS
+      config.bind('C', 'spawn open -a "Google Chrome" {url}')
 
       c.colors.webpage.prefers_color_scheme_dark = True
       c.fonts.default_size = "16pt"

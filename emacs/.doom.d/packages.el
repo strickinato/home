@@ -51,6 +51,7 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 
 (package! graphviz-dot-mode)
+(package! pinboard )
 (package! md4rd
   :recipe (:host github :repo "ahungry/md4rd"))
 
