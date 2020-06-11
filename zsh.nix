@@ -60,6 +60,8 @@ in {
       alias ....="cd ../../.."
       alias .....="cd ../../../.."
 
+      eval "$(direnv hook zsh)"
+
     '' + extraInitExtra;
 
     history = {

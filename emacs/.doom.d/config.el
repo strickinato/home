@@ -81,3 +81,8 @@
 (setq md4rd-subs-active '(Zettelkasten unixporn))
 
 (setq rust-format-on-save t)
+
+;; enable typescript-tslint checker
+(after! flycheck
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+ )

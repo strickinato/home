@@ -39,6 +39,9 @@
     hledger-ui
     hledger-web
 
+    direnv
+    lorri
+
     entr
     exercism
     fzf
