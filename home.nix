@@ -42,6 +42,8 @@
     direnv
     lorri
 
+    syncthing
+
     entr
     exercism
     fzf
