@@ -4,18 +4,18 @@
   (setq deft-directory "~/Dropbox/zettel")
 )
 
-    (setq org-default-notes-file
-          (concat org-directory "/inbox/notes.org"))
+(setq org-default-notes-file
+      (concat org-directory "/inbox/notes.org"))
 
-    (defun make-orgcapture-frame ()
-        "Create a new frame and run org-capture."
-        (interactive)
-        (make-frame '((name . "remember") (width . 120) (height . 32)
-                        (top . 400) (left . 300)
-                        (font . "-apple-Monaco-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-                    ))
-        (select-frame-by-name "remember")
-        (org-capture))
+(defun make-orgcapture-frame ()
+    "Create a new frame and run org-capture."
+    (interactive)
+    (make-frame '((name . "remember") (width . 120) (height . 32)
+                    (top . 400) (left . 300)
+                    (font . "-apple-Monaco-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+                ))
+    (select-frame-by-name "remember")
+    (org-capture))
 
 (setq org-publish-project-alist
       '(
