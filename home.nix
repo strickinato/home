@@ -1,7 +1,6 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-
   imports = [
     ./zsh.nix
     ./emacs.nix
@@ -10,7 +9,6 @@
 
   programs.home-manager = {
     enable = true;
-    path = "$HOME/home";
   };
 
   programs.bat.enable = true;

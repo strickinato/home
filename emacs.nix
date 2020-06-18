@@ -7,5 +7,8 @@
     ripgrep
     coreutils
     fd
+    
+    # dependency of org-roam
+    sqlite
   ];
 }

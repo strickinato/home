@@ -116,3 +116,21 @@ See `zsh/home_manager.zsh`
 ``` sh
 nix-shell -p ruby pry
 ```
+
+# On NIXOS
+
+ln -s `pwd` ~/.config/nixpkgs
+
+
+# Notable dots
+
+Th0rgal/horus-nix-home
+https://github.com/utdemir/dotfiles
+https://github.com/ghuntley/dotfiles-nixos
+https://github.com/peel/dotfiles
+https://github.com/tmplt/nixos-config
+https://github.com/search?q=nixfiles
+
+
+# TODO
+ * Why isn't the qutebrowser config caryring over?
