@@ -42,6 +42,11 @@
   services.xserver.layout = "us";
   services.xserver.xkbOptions = "caps:escape";
 
+  services.dwm-status = {
+    enable = true;
+    order = ["time" "network" "battery"];
+  };
+
   environment.systemPackages = with pkgs; [
     # Utilities
     wget
