@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./nixos-common.nix
+    ./nixos-graphical.nix
     ../services/dropbox.nix
     ../strickinato.nix
   ];

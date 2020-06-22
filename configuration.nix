@@ -4,11 +4,14 @@
 
 { config, pkgs, lib, ... }:
 
+let
+  local = import ./local.nix;
+  machineConfig = builtins.toPath ./. + "/machines/${local.hostname}.nix";
+in
 {
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
-      ./machines/hackerbox.nix
+      machineConfig
     ];
-
 }

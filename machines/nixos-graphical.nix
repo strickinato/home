@@ -28,7 +28,6 @@
              border-width = 2px
              password-border-width = 0
 
-
            '';
          };
        };
@@ -48,19 +47,13 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # Utilities
-    wget
-    vim
-    git
-    ranger
-    sxiv
-
     # System
     rofi
     dmenu
     dwm
     st
     alacritty
+    sxiv
     emacs
 
     # Applications

@@ -42,6 +42,8 @@
 
     syncthing
 
+    wget
+    git
     vim
     entr
     exercism
