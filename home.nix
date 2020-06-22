@@ -42,6 +42,7 @@
 
     syncthing
 
+    vim
     entr
     exercism
     fzf
@@ -54,10 +55,6 @@
 
 
   news.notify = "silent";
-
-
-
-
 
 
   # This value determines the Home Manager release that your

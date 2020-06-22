@@ -1,5 +1,8 @@
 tap "homebrew/cask" 
 
+tap "d12frosted/emacs-plus"
+brew "emacs-plus"
+
 cask "alfred"
 cask "bitwarden"
 cask "docker"
