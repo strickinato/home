@@ -35,14 +35,6 @@
   # TODO Is this thinkpad specific?
   services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # TODO Is this necessary with home manager?
-  users.users.strickinato = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" ]; # Enable ‘sudo’ for the user.
-    shell = pkgs.zsh;
-  };
-
   ####### 
   ####### 
   ####### 
