@@ -35,6 +35,39 @@
   # TODO Is this thinkpad specific?
   services.xserver.libinput.enable = true;
 
+  services.avahi = {
+    enable = true;
+    publish = {
+      enable = true;
+      userServices = true;
+    };
+  };
+  services.netatalk = {
+    enable = true;
+    extraConfig = ''
+      mimic model = RackMac
+      hosts allow = 192.168.1.0/24
+
+      [Strick Share]
+        path = /home/strickinato/Share
+        valid users = strickinato
+    '';
+  };
+  systemd.services.setup = {
+    description = "Idempotent setup";
+    requiredBy = ["netatalk.service"];
+    script = ''
+      mkdir -p /home/strickinato/Share
+      chown strickinato:users /home/strickinato/Share
+      chmod 0750 /home/strickinato/Share
+    '';
+  };
+
+  networking.firewall.allowedTCPPorts = [
+    # netatalk
+    548 636
+  ];
+
   ####### 
   ####### 
   ####### 

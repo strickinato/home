@@ -174,3 +174,10 @@ https://github.com/search?q=nixfiles
 
 # TODO
  * Why isn't the qutebrowser config caryring over?
+
+
+# APF File Sharing
+
+### Resources
+http://netatalk.sourceforge.net/3.1/htmldocs/afp.conf.5.html
+https://jarmac.org/category/nixos.html
