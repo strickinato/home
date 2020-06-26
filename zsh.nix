@@ -5,6 +5,7 @@ let
     ./zsh/kill.zsh
     ./zsh/home_manager.zsh
     ./zsh/my_ip.zsh
+    ./zsh/nixify.zsh
   ];
 
   extraInitExtra =
