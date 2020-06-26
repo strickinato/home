@@ -181,3 +181,4 @@ https://github.com/search?q=nixfiles
 ### Resources
 http://netatalk.sourceforge.net/3.1/htmldocs/afp.conf.5.html
 https://jarmac.org/category/nixos.html
+https://github.com/bjornfor/nixos-config/blob/978d91451d7a39349345544d1b5d50805b314f52/profiles/backup-server.nix
