@@ -3,6 +3,8 @@ tap "homebrew/cask"
 tap "d12frosted/emacs-plus"
 brew "emacs-plus"
 
+cask "anki"
+cask "dropbox"
 cask "alfred"
 cask "bitwarden"
 cask "docker"
