@@ -182,3 +182,9 @@ https://github.com/search?q=nixfiles
 http://netatalk.sourceforge.net/3.1/htmldocs/afp.conf.5.html
 https://jarmac.org/category/nixos.html
 https://github.com/bjornfor/nixos-config/blob/978d91451d7a39349345544d1b5d50805b314f52/profiles/backup-server.nix
+
+# Status for home server
+  - Got it to boot (finally)
+    - Had to reset by removing the CMOS battery! (and removing the graphics card)
+  - Did the partitioning, did nixos-install - but it failed to boot
+    - Have to jigger with the hardware-configuration I guess?

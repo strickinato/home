@@ -22,6 +22,7 @@ https://n-o-d-e.net/rss/rss.xml
 ** https://thelocalyarn.com/feed/
 ** Publications
 *** https://pudding.cool/feed/index.xml
+*** https://hnblogs.substack.com/feed
 ** Rust :rust:
 *** https://k155la3.blog/posts/index.xml
 ** Frontend :frontend:
