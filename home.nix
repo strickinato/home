@@ -25,6 +25,14 @@
         color.ui = true;
         credential.helper = "osxkeychain";
       };
+      aliases = {
+        co = "checkout";
+        st = "status";
+        lol = "log --decorate --all --graph --oneline";
+        l = "log --decorate --all --graph";
+        "branch-name" = "git rev-parse --abbrev-ref HEAD";
+        publish = "git push -u origin $(git branch-name)";
+      };
     };
 
   home.sessionVariables = {
