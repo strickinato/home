@@ -30,8 +30,9 @@
         st = "status";
         lol = "log --decorate --all --graph --oneline";
         l = "log --decorate --all --graph";
-        "branch-name" = "git rev-parse --abbrev-ref HEAD";
-        publish = "git push -u origin $(git branch-name)";
+        "branch-name" = "!git rev-parse --abbrev-ref HEAD";
+        publish = "!git push -u origin $(git branch-name)";
+        c = "!git checkout `git branch | fzf`";
       };
     };
 
