@@ -6,8 +6,8 @@
 *** https://blog.cynthia.re/rss.xml
 ** Programming :programming:
 *** https://christine.website/blog.rss
-*** https://cli.fan/posts/index.xml
 *** https://joshwcomeau.com/rss.xml
+*** https://alexanderobenauer.com/assets/feed/rss.xml
 *** https://buttondown.email/jaredpereira/rss
 *** https://julian.digital/feed/
 *** https://doronrasis.com/feed.xml
@@ -17,6 +17,7 @@
 *** https://rgoswami.me/posts/index.xml
 *** https://www.ryanprior.com/posts/index.xml
 *** https://jesseevers.com/feed.xml
+*** https://protesilaos.com/codelog.xml
 ** Hardware :hardware:
 https://n-o-d-e.net/rss/rss.xml
 ** https://thelocalyarn.com/feed/
@@ -25,10 +26,12 @@ https://n-o-d-e.net/rss/rss.xml
 *** https://hnblogs.substack.com/feed
 ** Rust :rust:
 *** https://k155la3.blog/posts/index.xml
+*** https://peppe.rs/index.xml
 ** Frontend :frontend:
 *** https://ishadeed.com/feed.xml
 *** https://dutzi.party/rss.xml
 *** https://aless.co/rss.xml
+*** https://varun.ca/rss.xml
 ** Infra
 *** https://grahamc.com/feed/
 *** https://blog.balthazar-rouberol.com/feeds/all.atom.xml
@@ -42,6 +45,7 @@ https://n-o-d-e.net/rss/rss.xml
 ** Internet
 *** https://subpixel.space/feed.xml
 *** http://pketh.org/feed.xml
+*** https://ideolalia.com/feed.xml
 ** Homeys
 *** https://cozy.computer/feed.xml
 ** Geometry
@@ -50,3 +54,22 @@ https://n-o-d-e.net/rss/rss.xml
 ** https://blog.veitheller.de/feed.rss
 ** https://macwright.org/rss.xml
 ** https://routley.io/posts/index.xml
+** https://feross.org/atom.xml
+** https://mdwdotla.medium.com/feed
+** https://waitbutwhy.com/feed
+** https://thesephist.com/index.xml
+** https://maxwellforbes.com/feed.xml
+** https://www.theguardian.com/lifeandstyle/series/experience/rss
+** https://www.swyx.io/rss.xml
+** https://beepb00p.xyz/rss.xml
+** https://malleable.systems/blog/index.xml
+** https://xenodium.com/rss.xml
+** https://dev.to/feed/jwoudenberg
+** https://batsov.com/atom.xml
+** https://www.stephendiehl.com/feed.rss
+** https://sachachua.com/blog/category/emacs-news/feed/
+** https://notes.neeasade.net/rss.xml
+** https://karthinks.com/index.xml
+** https://ag91.github.io/rss.xml
+** https://dynomight.net/feed.xml
+** https://mattbruenig.com/
