@@ -54,3 +54,5 @@
 (package! pinboard )
 
 (package! git-link)
+
+(package! load-env-vars)
