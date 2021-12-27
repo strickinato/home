@@ -36,6 +36,19 @@
       };
     };
 
+  programs.ssh = {
+    enable = true;
+    extraConfig = "
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+Host bird
+  User strickinato
+Host wolf
+  User pi
+    ";
+  };
+
   home.sessionVariables = {
     LEDGER_FILE = "$HOME/ledger/ledger.journal";
     EDITOR = "vim";
@@ -64,10 +77,6 @@
     tldr
     zsh
   ];
-
-
-
-  news.notify = "silent";
 
 
   # This value determines the Home Manager release that your
