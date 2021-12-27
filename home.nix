@@ -55,6 +55,7 @@ Host wolf
   };
 
   home.file.".hammerspoon".source = /Users/strickinato/home/services/hammerspoon;
+  home.file.".config/karabiner".source = /Users/strickinato/home/services/karabiner;
 
   home.packages = with pkgs; [
     hledger
