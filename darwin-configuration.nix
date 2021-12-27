@@ -19,9 +19,9 @@
   # $ darwin-rebuild switch -I darwin-config=$HOME/home/darwin-configuration.ni
   environment.darwinConfig = "$HOME/home/darwin-configuration.nix";
   nix.nixPath = [
-    { home-manager = "$HOME/.nix-defexpr/channels/home-manager/"; }
-    { darwin = "$HOME/.nix-defexpr/channels/darwin/"; }
-    { pkgs = "$HOME/.nix-defexpr/channels/pkgs/"; }
+    "darwin-config=$HOME/home/darwin-configuration.nix"
+    "darwin=$HOME/.nix-defexpr/channels/darwin"
+    "$HOME/.nix-defexpr/channels"
   ];
 
   # Auto upgrade nix package and the daemon service.
