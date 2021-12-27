@@ -78,8 +78,6 @@
     :desc "New File and Link" :gn "z N" #'zetteldeft-deft-new-search-and-link
     )
 
-(setq md4rd-subs-active '(Zettelkasten unixporn))
-
 (setq rust-format-on-save t)
 
 ;; enable typescript-tslint checker
