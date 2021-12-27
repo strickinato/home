@@ -41,6 +41,8 @@
     EDITOR = "vim";
   };
 
+  home.file.".hammerspoon".source = /Users/aaronstrick/home/services/hammerspoon;
+
   home.packages = with pkgs; [
     hledger
     hledger-ui
