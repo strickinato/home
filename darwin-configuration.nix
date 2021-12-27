@@ -4,10 +4,13 @@
   # Use home manager to manage things
   imports = [ <home-manager/nix-darwin> ];
 
+  nix.useDaemon = true;
+
   home-manager.useUserPackages = true;
   home-manager.users = {
     strickinato = {
       imports = [ ./home.nix ];
+    };
   };
 
   fonts = {

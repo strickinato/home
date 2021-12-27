@@ -4,3 +4,4 @@
 tmp/
 .local
 Brewfile.lock.json
+emacs/.doom.d/config.el
