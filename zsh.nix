@@ -2,6 +2,8 @@
 
 let
   extras = [
+    ./zsh/cat_path.zsh
+    ./zsh/fgit.zsh
     ./zsh/kill.zsh
     ./zsh/home_manager.zsh
     ./zsh/my_ip.zsh
