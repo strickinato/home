@@ -8,16 +8,6 @@
   home-manager.users = {
     strickinato = {
       imports = [ ./home.nix ];
-      
-      # TODO Move to a profile
-      home.file.".config/yabai/yabairc" = {
-        source = ./yabairc;
-      };
-      home.file.".config/skhd/skhdrc" = {
-        source = ./skhdrc;
-      };
-    };
-    
   };
 
   fonts = {
@@ -77,16 +67,6 @@
 
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = true;
-  
-  # TODO Setup the dotfiles
-  services.yabai = {
-    enable = true;
-    package = pkgs.yabai;
-  };
-  services.skhd = {
-    enable = true;
-    package = pkgs.skhd;
-  };
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
