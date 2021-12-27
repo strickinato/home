@@ -51,10 +51,6 @@ in {
       }
     ];
 
-    profileExtra = ''
-      . $HOME/.nix-profile/etc/profile.d/nix.sh
-    '';
-
     initExtra = ''
       alias ll="ls -la"
 
