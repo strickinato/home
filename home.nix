@@ -38,15 +38,14 @@
 
   programs.ssh = {
     enable = true;
-    extraConfig = "
-Host *
-  AddKeysToAgent yes
-  UseKeychain yes
-Host bird
-  User strickinato
-Host wolf
-  User pi
-    ";
+    matchBlocks = {
+      bird = {
+        user = "strickinato";
+      };
+      wolf = {
+        user = "pi";
+      };
+    };
   };
 
   home.sessionVariables = {
