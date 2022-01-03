@@ -54,8 +54,8 @@
       
       _HIHideMenuBar = true;
 
-      KeyRepeat = 1;
-      InitialKeyRepeat = 10;
+      KeyRepeat = 2;
+      InitialKeyRepeat = 25;
       
       #volume feedback
       "com.apple.sound.beep.feedback" = 1;
