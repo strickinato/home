@@ -190,6 +190,11 @@ they are implemented.
     :desc "New File" :gn "z n" #'zetteldeft-new-file
     :desc "New File and Link" :gn "z N" #'zetteldeft-deft-new-search-and-link
     )
+
+(map!
+    :leader
+    :desc "Project Eshell" :gn "p SPC" #'project-eshell
+    )
 #+END_SRC
 
 * Rust Mode
