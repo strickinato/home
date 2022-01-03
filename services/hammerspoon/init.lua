@@ -18,6 +18,10 @@ hs.hotkey.bind(hyper, "s", function()
   hs.application.launchOrFocus("slack")
 end)
 
+hs.hotkey.bind(hyper, "z", function()
+  hs.application.launchOrFocus("zoom.us")
+end)
+
 hs.hotkey.bind(hyper, "r", function()
   hs.reload();
 end)
