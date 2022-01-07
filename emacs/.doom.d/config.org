@@ -172,11 +172,35 @@ they are implemented.
 
 #+BEGIN_SRC emacs-lisp :tangle yes
 
+
+;; This has to be done for some reason
+;; Or else stuff doesn't load
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
 (defun strickinato/open-ledger ()
   (interactive)
   (find-file "~/ledger/2020.journal")
-  (end-of-buffer)
-  )
+  (end-of-buffer))
+
+(defun strickinato/open-rss ()
+  (interactive)
+  (=rss)
+  (elfeed-update))
+
+(defun strickinato/open-npr ()
+  (interactive)
+  (eww "https://text.npr.org")
+  (doom/window-maximize-buffer))
+
+(defun strickinato/open-legible-news ()
+  (interactive)
+  (eww "https://legiblenews.com/")
+  (doom/window-maximize-buffer))
+
+(defun strickinato/open-cnn ()
+  (interactive)
+  (eww "https://lite.cnn.com/")
+  (doom/window-maximize-buffer))
 
 (after! pinboard
   (add-to-list 'auth-sources "~/.pinboard-auth" t))
@@ -194,6 +218,10 @@ they are implemented.
 (map!
     :leader
     :desc "Project Eshell" :gn "p SPC" #'project-eshell
+    :desc "RSS" :gn "r r" #'strickinato/open-rss
+    :desc "npr" :gn "r n" #'strickinato/open-npr
+    :desc "legible news" :gn "r l" #'strickinato/open-legible-news
+    :desc "cnn" :gn "r c" #'strickinato/open-cnn
     )
 #+END_SRC
 
