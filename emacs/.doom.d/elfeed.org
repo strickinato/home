@@ -73,3 +73,7 @@ https://n-o-d-e.net/rss/rss.xml
 ** https://ag91.github.io/rss.xml
 ** https://dynomight.net/feed.xml
 ** https://mattbruenig.com/
+** https://www.granolashotgun.com/?format=rss
+** http://pketh.org/feed.xml
+** https://small-tech.org/news/index.xml
+** https://pchiusano.github.io/feed.xml
