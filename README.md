@@ -57,6 +57,16 @@ sudo darwin-rebuild switch \
 
 ```
 
+### hammerspoon
+
+``` sh
+
+defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
+ln -s $HOME/home/services/hammerspoon $HOME/.config
+```
+
+ln -s
+
 
 
 # Dev setup
