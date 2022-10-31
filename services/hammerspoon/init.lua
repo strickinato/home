@@ -19,7 +19,12 @@ hs.hotkey.bind(hyper, "s", function()
 end)
 
 hs.hotkey.bind(hyper, "z", function()
-  hs.application.launchOrFocus("zoom.us")
+  local zoomInstance = hs.application.find("zoom.us")
+  if zoomInstance ~= nil then
+    hs.application.launchOrFocus("zoom.us")
+  else
+    hs.alert.show("no zoom")
+  end
 end)
 
 hs.hotkey.bind(hyper, "n", function()
