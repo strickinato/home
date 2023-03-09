@@ -14,81 +14,6 @@
 
 * Org
 
-
-** Zettel
-
-*** Setup
-
-The org-mode setup is currently 3 fold:
- - org, for base functionality
- - org-roam for indexing and discoverability
- - deft for searching
-
-#+BEGIN_SRC emacs-lisp :tangle yes
-
-(after! org
-  (setq org-directory "~/Dropbox/zettel")
-  (setq org-roam-directory "~/Dropbox/zettel")
-  (setq deft-directory "~/Dropbox/zettel")
-)
-
-#+END_SRC
-
-** Capturing
-*** From Alfred
-In support of: https://github.com/jjasghar/alfred-org-capture/blob/master/el/alfred-org-capture.el
-In order to quickly capture something when I'm not in an emacs context:
-
-#+begin_src emacs-lisp :tangle yes
-    (setq org-default-notes-file
-          (concat org-directory "/inbox/notes.org"))
-
-#+end_src
-
-#+begin_src emacs-lisp :tangle yes
-
-    (defun make-orgcapture-frame ()
-        "Create a new frame and run org-capture."
-        (interactive)
-        (make-frame '((name . "remember") (width . 120) (height . 32)
-                        (top . 400) (left . 300)
-                        (font . "-apple-Monaco-medium-normal-normal-*-16-*-*-*-m-0-iso10646-1")
-                    ))
-        (select-frame-by-name "remember")
-        (org-capture))
-
-#+end_src
-
-** Publishing
-
-#+begin_src emacs-lisp :tangle yes
-
-(setq org-publish-project-alist
-      '(
-
-        ("garden-org"
-            :base-directory "~/Dropbox/projects/MAINTAINED/garden"
-            :base-extension "org"
-            :publishing-directory "~/Dropbox/projects/MAINTAINED/garden/build"
-            :recursive t
-            :publishing-function org-pandoc-export-to-html5
-            :headline-levels 3
-            :auto-preamble t
-        )
-
-        ("garden-static"
-            :base-directory "~/Dropbox/projects/MAINTAINED/garden"
-            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-            :publishing-directory "~/Dropbox/projects/MAINTAINED/garden/build"
-            :recursive t
-            :publishing-function org-publish-attachment
-        )
-
-        ("garden" :components ("garden-org" "garden-static"))
-
-      ))
-#+end_src
-
 * Appearances
 Doom exposes five (optional) variables for controlling fonts in Doom. Here
 are the three important ones:
@@ -124,23 +49,7 @@ font string. You generally only need these two:
 (setq display-line-numbers-type t)
 
 #+END_SRC
-** Treemacs
-Find the treemacs config options[[https://github.com/Alexander-Miller/treemacs#installation][ here]]
 
-#+begin_src emacs-lisp :tangle yes
-
-(after! treemacs
-  (treemacs-resize-icons 0)
-  (setq treemacs-no-png-images t)
-  )
-
-#+end_src
-* Elfeed / RSS
-#+begin_src emacs-lisp :tangle yes
-(setq rmh-elfeed-org-files (list "~/.doom.d/elfeed.org"))
-(after! org
-  (elfeed-org))
-#+end_src
 
 * Doom "docs"
 

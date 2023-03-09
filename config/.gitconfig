@@ -1,0 +1,13 @@
+[user]
+	name = Aaron Strick
+	email = aaronstrick@gmail.com
+	username = strickinato
+
+[init]
+	defaultBranch = main
+
+[core]
+	excludesfile = home/git/.gitignore
+[alias]
+	co = checkout
+	publish = !git push -u origin $(git branch-name)
