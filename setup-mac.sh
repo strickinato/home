@@ -8,6 +8,8 @@ mkdir -p ~/.config
 ln -s $MY_CONFIG_DIR/.zshrc ~/.zshrc
 ln -s $MY_CONFIG_DIR/.gitconfig ~/.gitconfig
 
+ln -s $MY_CONFIG_DIR/ssh/config ~/.ssh/config
+
 mkdir -p ~/.config/karabiner
 ln -s $MY_CONFIG_DIR/karabiner.json ~/.config/karabiner/karabiner.json
 
