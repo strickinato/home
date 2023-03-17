@@ -14,3 +14,4 @@ export STARSHIP_CONFIG=$DOT_DIR/starship.toml
 eval "$(direnv hook zsh)"
 
 export PATH=$HOME/.emacs.d/bin:$PATH
+export PATH=$HOME/.config/emacs/bin:$PATH

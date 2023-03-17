@@ -18,6 +18,8 @@ defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/i
 
 ln -s $MY_CONFIG_DIR/iterm/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 
+# Run the setup for fzf after install
+/opt/homebrew/opt/fzf/install
 
 # Setup doom emacs
 
