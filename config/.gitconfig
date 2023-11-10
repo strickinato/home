@@ -1,7 +1,11 @@
 [user]
 	name = Aaron Strick
-	email = aaronstrick@gmail.com
 	username = strickinato
+
+[includeIf "gitdir:~/work/"]
+	path = ~/.gitconfig-work
+[includeIf "gitdir:~/code/"]
+	path = ~/.gitconfig-personal
 
 [init]
 	defaultBranch = main
