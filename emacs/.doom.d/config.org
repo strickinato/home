@@ -91,11 +91,6 @@ they are implemented.
   (find-file "~/ledger/2020.journal")
   (end-of-buffer))
 
-(defun strickinato/open-rss ()
-  (interactive)
-  (=rss)
-  (elfeed-update))
-
 (defun strickinato/open-npr ()
   (interactive)
   (eww "https://text.npr.org")
@@ -118,16 +113,8 @@ they are implemented.
 
 (map!
     :leader
-    :desc "Open Ledger" :gn "n j" #'strickinato/open-ledger
-    :desc "Launch Zetteldeft" :gn "n SPC" #'zetteldeft-deft-new-search
-    :desc "New File" :gn "z n" #'zetteldeft-new-file
-    :desc "New File and Link" :gn "z N" #'zetteldeft-deft-new-search-and-link
-    )
-
-(map!
-    :leader
     :desc "Project Eshell" :gn "p SPC" #'project-eshell
-    :desc "RSS" :gn "r r" #'strickinato/open-rss
+
     :desc "npr" :gn "r n" #'strickinato/open-npr
     :desc "legible news" :gn "r l" #'strickinato/open-legible-news
     :desc "cnn" :gn "r c" #'strickinato/open-cnn
@@ -149,3 +136,25 @@ they are implemented.
  )
 #+end_src
 
+
+* Second Brain stuff
+
+#+begin_src emacs-lisp :tangle yes
+
+(setq deft-directory "~/brain")
+(setq deft-recursive t)
+(setq deft-use-filename-as-title t)
+(map!
+    :leader
+    :desc "Deft File" :gn "n f" #'deft-find-file)
+
+
+;; https://emacs.stackexchange.com/questions/71100/pasting-images-from-clipboard-into-orgmode
+(after! org-download
+      (setq org-download-method 'directory)
+      (setq org-download-image-dir (concat (file-name-sans-extension (buffer-file-name)) "-img"))
+      (setq org-download-image-org-width 600)
+      (setq org-download-link-format "[[file:%s]]\n"
+        org-download-abbreviate-filename-function #'file-relative-name)
+      (setq org-download-link-format-function #'org-download-link-format-function-default))
+#+end_src
