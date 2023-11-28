@@ -157,4 +157,12 @@ they are implemented.
       (setq org-download-link-format "[[file:%s]]\n"
         org-download-abbreviate-filename-function #'file-relative-name)
       (setq org-download-link-format-function #'org-download-link-format-function-default))
+
+(after! org-journal
+  (setq org-journal-dir "~/brain/Inbox/")
+  (setq org-journal-file-format "%Y-%m-%d.md")
+  (setq org-journal-date-format "%Y-%m-%d")
+  (setq org-journal-date-prefix "# ")
+  (setq org-journal-time-prefix "\n## ")
+  )
 #+end_src
