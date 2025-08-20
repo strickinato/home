@@ -1,0 +1,17 @@
+theme=Horizon
+link-url=true
+title="STRICKHACK"
+macos-titlebar-proxy-icon=hidden
+window-inherit-font-size=true
+font-family=Fira Code
+window-title-font-family=Comic Sans MS
+copy-on-select=true
+
+quit-after-last-window-closed=true
+
+quick-terminal-position=top
+maximize=true
+
+keybind=global:shift+cmd+enter=toggle_quick_terminal
+
+keybind = shift+enter=text:\n

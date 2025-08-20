@@ -37,6 +37,7 @@ cask "slack"
 cask "netnewswire"
 cask "calibre"
 cask "cleanshot"
+cask "ghostty"
 
 cask "bitwig-studio"
 cask "darktable"
