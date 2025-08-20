@@ -51,8 +51,22 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 
 (package! graphviz-dot-mode)
-(package! pinboard )
 
 (package! git-link)
 
 (package! load-env-vars)
+(package! chatgpt-shell)
+(package! modus-themes)
+(package! ef-themes)
+
+(package! dwim-shell-command
+  ;; To include shell-commands
+  :recipe
+  (:host github
+   :repo "xenodium/dwim-shell-command"
+   :files ("*.el")))
+
+
+(package! claude-code-ide
+  :recipe (:host github :repo "manzaltu/claude-code-ide.el"))
+
