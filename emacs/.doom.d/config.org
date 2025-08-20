@@ -1,132 +1,110 @@
 * Directives
 ;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-* Personal Info
-
-(Came w/ doom)
-
-#+BEGIN_SRC emacs-lisp
+* Who is it?
+#+BEGIN_SRC emacs-lisp :tangle yes
 
 (setq user-full-name "Aaron Strick"
       user-mail-address "aaronstrick@gmail.com")
 
 #+END_SRC
 
-* Org
+* Load Paths
+
+For example $DOOM_DIR/packages/my_package/files.el
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+
+(let ((default-directory (expand-file-name "packages" doom-private-dir)))
+  (normal-top-level-add-subdirs-to-load-path))
+
+#+END_SRC
 
 * Appearances
-Doom exposes five (optional) variables for controlling fonts in Doom. Here
-are the three important ones:
 
-+ `doom-font'
-+ `doom-variable-pitch-font'
-+ `doom-big-font' -- used for `doom-big-font-mode'; use this for
-  presentations or streaming.
+Doom exposes the following:
+    doom-font: the primary font to use
+    doom-variable-pitch-font: a non-monospace font (where applicable)
+    doom-big-font: used for `doom-big-font-mode’; use this for presentations or streaming.
+    doom-unicode-font: for unicode glyphs
+    doom-serif-font: for the `fixed-pitch-serif’ face
 
-They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-font string. You generally only need these two:
 #+BEGIN_SRC emacs-lisp :tangle yes
 
 (setq doom-font (font-spec :family "Fira Code" :size 14))
+(setq doom-variable-pitch-font (font-spec :family "Gill Sans" :size 14))
+
+;;(setq doom-theme 'doom-horizon)
+(setq doom-theme 'ef-dark)
 
 #+END_SRC
 
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. To use relative line numbers, set this to `relative'.
 #+BEGIN_SRC emacs-lisp :tangle yes
 
-(setq doom-theme 'doom-horizon)
-
-#+END_SRC
-
-* UI Defaults
-** Defaults
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-#+BEGIN_SRC emacs-lisp
-
 (setq display-line-numbers-type t)
+(setq frame-title-format nil)
+(add-hook 'emacs-startup-hook #'toggle-frame-maximized)
+(use-package! hide-mode-line
+  :config
+  (global-hide-mode-line-mode 1))
+
+
 
 #+END_SRC
 
+** Cleanup dired a bit
 
-* Doom "docs"
+#+begin_src :tangle yes
 
-Here are some additional functions/macros that could help you configure Doom:
-
-- `load!' for loading external *.el files relative to this one
-- `use-package' for configuring packages
-- `after!' for running code after a package has loaded
-- `add-load-path!' for adding directories to the `load-path', relative to
-  this file. Emacs searches the `load-path' when you load packages with
-  `require' or `use-package'.
-- `map!' for binding new keys
-
-To get information about any of these functions/macros, move the cursor over
-the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
-This will open documentation for it, including demos of how they are used.
-
-You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
-they are implemented.
-
-* Dot Mode / GraphViz
-#+begin_src emacs-lisp :tangle yes
-
-(use-package! graphviz-dot-mode)
+(add-hook 'dired-mode-hook #'dired-hide-details-mode)
 
 #+end_src
+
+* Random
+#+BEGIN_SRC emacs-lisp :tangle yes
+;; I needed this to get some EWW webpages to load.
+;; I don't really use that anymore, but I feel like this is a reasonable fix to keep.
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+#+END_SRC
 
 * Bindings
 
 #+BEGIN_SRC emacs-lisp :tangle yes
 
-
-;; This has to be done for some reason
-;; Or else stuff doesn't load
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
-
-(defun strickinato/open-ledger ()
-  (interactive)
-  (find-file "~/ledger/2020.journal")
-  (end-of-buffer))
-
-(defun strickinato/open-npr ()
-  (interactive)
-  (eww "https://text.npr.org")
-  (doom/window-maximize-buffer))
-
-(defun strickinato/open-legible-news ()
-  (interactive)
-  (eww "https://legiblenews.com/")
-  (doom/window-maximize-buffer))
-
-(defun strickinato/open-cnn ()
-  (interactive)
-  (eww "https://lite.cnn.com/")
-  (doom/window-maximize-buffer))
-
-(after! pinboard
-  (add-to-list 'auth-sources "~/.pinboard-auth" t))
-
-(add-to-list 'auto-mode-alist '("\\.journal" . ledger-mode))
-
 (map!
     :leader
     :desc "Project Eshell" :gn "p SPC" #'project-eshell
-
-    :desc "npr" :gn "r n" #'strickinato/open-npr
-    :desc "legible news" :gn "r l" #'strickinato/open-legible-news
-    :desc "cnn" :gn "r c" #'strickinato/open-cnn
+    :desc "Toggle modeline" :gn "t m" #'global-hide-mode-line-mode
+    :desc "dirvish" :gn "-" #'dirvish
     )
 #+END_SRC
 
-* Rust Mode
+* LSP
+
 #+begin_src emacs-lisp :tangle yes
 
-(setq rust-format-on-save t)
+(after! lsp-mode
+  (setq lsp-lens-enable nil)
+  (setq lsp-ui-doc-enable nil)
+  (setq lsp-ui-sideline-enable nil)
+
+  )
 
 #+end_src
+* Completion
+
+#+begin_src emacs-lisp :tangle yes
+
+(after! corfu
+  (setq corfu-auto nil)
+  )
+
+(map! :i "C-SPC" #'completion-at-point)
+
+#+end_src
+
 * Typescript
 #+begin_src emacs-lisp :tangle yes
 
@@ -136,6 +114,39 @@ they are implemented.
  )
 #+end_src
 
+* ChatGPTShell
+#+begin_src emacs-lisp :tangle yes
+
+(use-package! chatgpt-shell
+  :config
+  (setq chatgpt-shell-openai-key
+        (lambda ()
+            (auth-source-pick-first-password :host "api.openai.com")))
+
+  (setq chatgpt-shell-always-create-new nil))
+
+
+(use-package! claude-code-ide
+  :custom (claude-code-ide-terminal-backend 'eat)
+  )
+  ;; :bind ("C-c C-'" . claude-code-ide-menu)
+  ;; :config
+  ;; (claude-code-ide-emacs-tools-setup))
+#+end_src
+
+* Tidal Cycles
+#+begin_src emacs-lisp :tangle yes
+
+;; enable typescript-tslint checker
+(setq tidal-interpreter "/Users/strickinato/.ghcup/bin/ghci")
+(setq tidal-boot-script-path "/Users/strickinato/.local/share/x86_64-osx-ghc-9.6.2/tidal-1.9.4/BootTidal.hs")
+
+(map!
+   :mode tidal-mode
+   :localleader
+   :desc "Run line" :gn "e" #'tidal-run-multiple-lines
+   )
+#+end_src
 
 * Second Brain stuff
 
