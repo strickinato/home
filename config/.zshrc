@@ -13,6 +13,8 @@ export STARSHIP_CONFIG=$DOT_DIR/starship.toml
 # Setup direnv
 eval "$(direnv hook zsh)"
 
+# Setup zoxide
+eval "$(zoxide init zsh)"
 export PATH=$HOME/.emacs.d/bin:$PATH
 export PATH=$HOME/.config/emacs/bin:$PATH
 # https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/history.zsh

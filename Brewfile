@@ -10,6 +10,7 @@ brew "direnv"
 brew "bat"
 brew "entr"
 brew "tldr"
+brew "zoxide"
 
 # specific emacs dependencies
 brew "fd"
