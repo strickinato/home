@@ -1,6 +1,7 @@
 [user]
 	name = Aaron Strick
 	username = strickinato
+	email = aaronstrick@gmail.com
 
 [includeIf "gitdir:~/work/"]
 	path = ~/.gitconfig-work
@@ -19,3 +20,8 @@
 	copy = "!git branch --show-current | pbcopy; echo \"Copied branch to clipboard: $(pbpaste)\""
 	b = !git checkout "$(git reflog show --pretty=format:'%gs ~ %gd' --date=relative | grep 'checkout:' | grep -oE '[^ ]+ ~ .*' | awk -F~ '!seen[$1]++' | head -n 50 | awk '{print $1}' | fzf --reverse)"
 	prs = !git log --merges --abbrev-commit --oneline
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

@@ -2,6 +2,9 @@
 .idea
 *.log
 tmp/
+.dev.local
 .local
 Brewfile.lock.json
+
 emacs/.doom.d/config.el
+emacs/.doom.d/packages
