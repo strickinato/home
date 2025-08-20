@@ -11,6 +11,7 @@ brew "bat"
 brew "entr"
 brew "tldr"
 brew "zoxide"
+brew "mise"
 
 # specific emacs dependencies
 brew "fd"
