@@ -17,7 +17,12 @@ mkdir -p ~/.config/hammerspoon
 ln -s $MY_CONFIG_DIR/hammerspoon/init.lua $HOME/.config/hammerspoon/init.lua
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 
+ln -s $MY_CONFIG_DIR/nvim $HOME/.config/nvim
+ln -s $MY_CONFIG_DIR/tmux $HOME/.config/tmux
 ln -s $MY_CONFIG_DIR/ghostty $HOME/.config/ghostty
+
+ln -s $DOT_DIR/scripts ~/.local/scripts
+
 
 ln -s $MY_CONFIG_DIR/iterm/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 
