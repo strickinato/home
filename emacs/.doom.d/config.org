@@ -134,19 +134,8 @@ Doom exposes the following:
   ;; (claude-code-ide-emacs-tools-setup))
 #+end_src
 
-* Tidal Cycles
-#+begin_src emacs-lisp :tangle yes
 
-;; enable typescript-tslint checker
-(setq tidal-interpreter "/Users/strickinato/.ghcup/bin/ghci")
-(setq tidal-boot-script-path "/Users/strickinato/.local/share/x86_64-osx-ghc-9.6.2/tidal-1.9.4/BootTidal.hs")
 
-(map!
-   :mode tidal-mode
-   :localleader
-   :desc "Run line" :gn "e" #'tidal-run-multiple-lines
-   )
-#+end_src
 
 * Second Brain stuff
 
