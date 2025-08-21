@@ -181,36 +181,5 @@ Doom exposes the following:
 
 #+begin_src emacs-lisp :tangle yes
 
-(defvar strk/freewrite-prompts
-  '("What's infiltrated your mind lately?"
-    "What's something funny Sunny did recently?"
-    "What's something funny Dino did recently?"
-    "What's something good about Lucy?"
-    "Start listing things you're grateful for"
-    ))
-
-(defun strk/get-random-prompt ()
-  "Return a random prompt from `strk/freewrite-prompts'."
-  (nth (random (length strk/freewrite-prompts)) strk/freewrite-prompts))
-
-(defun strk/freewrite ()
-  "Create a new freewrite entry with a random prompt and open it in fullscreen writing mode."
-  (interactive)
-  (let* ((directory "~/brain/freewrite")
-         (file-path (expand-file-name (format "freewrite-%s.md" (format-time-string "%Y-%m-%d-%H%M%S")) directory))
-         (prompt (strk/get-random-prompt)))
-    (unless (file-exists-p directory)
-      (make-directory directory t))
-    (with-temp-file file-path
-      (insert (format "---\ntitle: Freewrite - %s\nprompt: %s\n---\n\n"
-                      (format-time-string "%Y-%m-%d")
-                      prompt)))
-    (find-file file-path)
-    (goto-char (point-max))
-    (delete-other-windows)
-    (when (boundp 'display-line-numbers-mode)
-      (display-line-numbers-mode -1))
-    (+zen/toggle)))
-
-(global-set-key (kbd "C-c f") 'strk/freewrite)
+(global-set-key (kbd "C-c f") 'freewrite/freewrite)
 #+end_src
