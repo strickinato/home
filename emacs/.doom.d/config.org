@@ -132,6 +132,8 @@ Doom exposes the following:
   ;; :bind ("C-c C-'" . claude-code-ide-menu)
   ;; :config
   ;; (claude-code-ide-emacs-tools-setup))
+
+(setenv "OPENAI_API_KEY" (auth-source-pick-first-password :host "api.openai.com"))
 #+end_src
 
 * Tidal Cycles
