@@ -1,3 +1,5 @@
+#+STARTUP: overview
+
 * Directives
 ;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
@@ -136,7 +138,6 @@ Doom exposes the following:
 
 
 
-
 * Second Brain stuff
 
 #+begin_src emacs-lisp :tangle yes
@@ -166,7 +167,6 @@ Doom exposes the following:
   (setq org-journal-time-prefix "\n## ")
   )
 #+end_src
-
 
 
 * Habits
