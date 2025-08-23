@@ -18,7 +18,7 @@
 (defun freewrite/countdown--update-posframe ()
   "Update the countdown posframe each second; hide it at zero."
   (if (<= freewrite/countdown-seconds-left 0)
-      (freewrite/countdown-shutdown))
+      (freewrite/countdown-shutdown)
     (posframe-show
      " *freewrite-countdown*"
      :string               (format "⏳ %2d s left" freewrite/countdown-seconds-left)
@@ -29,7 +29,7 @@
      :border-width         1
      :border-color         "#666"
      :accept-focus         nil)
-    (cl-decf freewrite/countdown-seconds-left)))
+    (cl-decf freewrite/countdown-seconds-left))
 
 (defun freewrite/countdown-shutdown ()
     ;; TODO this should happen automatically, but for now have it callable
