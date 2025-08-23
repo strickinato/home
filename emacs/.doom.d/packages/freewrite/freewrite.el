@@ -29,7 +29,7 @@
      :border-width         1
      :border-color         "#666"
      :accept-focus         nil)
-    (cl-decf freewrite/countdown-seconds-left))
+    (cl-decf freewrite/countdown-seconds-left)))
 
 (defun freewrite/countdown-shutdown ()
     ;; TODO this should happen automatically, but for now have it callable
