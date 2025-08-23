@@ -18,11 +18,7 @@
 (defun freewrite/countdown--update-posframe ()
   "Update the countdown posframe each second; hide it at zero."
   (if (<= freewrite/countdown-seconds-left 0)
-      (progn
-        (when freewrite/countdown-timer
-          (cancel-timer freewrite/countdown-timer)
-          (setq freewrite/countdown-timer nil))
-        (posframe-hide " *freewrite-countdown*"))
+      (freewrite/countdown-shutdown))
     (posframe-show
      " *freewrite-countdown*"
      :string               (format "⏳ %2d s left" freewrite/countdown-seconds-left)
@@ -34,6 +30,15 @@
      :border-color         "#666"
      :accept-focus         nil)
     (cl-decf freewrite/countdown-seconds-left)))
+
+(defun freewrite/countdown-shutdown ()
+    ;; TODO this should happen automatically, but for now have it callable
+    (interactive)
+    (progn
+        (when freewrite/countdown-timer
+          (cancel-timer freewrite/countdown-timer)
+          (setq freewrite/countdown-timer nil))
+        (posframe-hide " *freewrite-countdown*")))
 
 (defun freewrite/start-countdown (seconds)
   "Start a SECONDS-long countdown shown in a top-right posframe."
@@ -76,6 +81,11 @@
     (+zen/toggle)
     (freewrite/start-countdown 300)))
 
+;; TODO
+;; When I close the file - I want the countdown timer to go away
+;; I also want to cancel the freewrite and have it not save
+;; I want to open the freewrite directory in a search buffer, or dired, or something like that
 
 ;; (posframe-delete " *freewrite-countdown*")
 ;; (posframe-delete-all)
+(provide 'freewrite)

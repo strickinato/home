@@ -72,4 +72,4 @@
 
 
 (package! freewrite
-  :recipe (:local-file "packages/freewrite"))
+  :recipe (:local-repo "packages/freewrite"))

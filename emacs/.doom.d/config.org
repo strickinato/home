@@ -181,5 +181,8 @@ Doom exposes the following:
 
 #+begin_src emacs-lisp :tangle yes
 
+(use-package! freewrite
+  :defer nil)
+
 (global-set-key (kbd "C-c f") 'freewrite/freewrite)
 #+end_src
