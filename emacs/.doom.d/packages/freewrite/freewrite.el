@@ -79,7 +79,8 @@
     (when (boundp 'display-line-numbers-mode)
       (display-line-numbers-mode -1))
     (+zen/toggle)
-    (freewrite/start-countdown 300)))
+    (freewrite/start-countdown 300)
+    (add-hook 'kill-buffer-hook #'freewrite/countdown-shutdown nil t)))
 
 ;; TODO
 ;; When I close the file - I want the countdown timer to go away
