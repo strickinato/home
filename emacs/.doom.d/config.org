@@ -94,6 +94,13 @@ Doom exposes the following:
 
   )
 
+(map!
+    :leader
+    :desc "Next error" :gn "e j" #'flycheck-next-error
+    :desc "Previous error" :gn "e k" #'flycheck-previous-error
+    :desc "List errors" :gn "e l" #'flycheck-list-errors
+    )
+
 #+end_src
 * Completion
 
