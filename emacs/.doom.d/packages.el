@@ -59,6 +59,7 @@
 (package! modus-themes)
 (package! ef-themes)
 
+(package! org-habit-stats)
 (package! dwim-shell-command
   ;; To include shell-commands
   :recipe

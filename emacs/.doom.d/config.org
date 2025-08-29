@@ -180,15 +180,12 @@ Doom exposes the following:
 I've been using[[https:xenodium.com][ xenodium]]'s flat habits, but I want to be able to super quickly mark things on my computer. org-habit weirdly doesn't seem to have support for this... I guess because they expect you to fully be on org mode (which I'm not). So this code allows me to update the habits
 #+begin_src emacs-lisp :tangle yes
 
+(use-package! org-habit-stats)
+
 (setq strk/habit-file "~/Library/Mobile Documents/com~apple~CloudDocs/Org/MyHabits.org")
 (after! org
   (add-to-list 'org-modules 'org-habit)
   (add-to-list 'org-agenda-files strk/habit-file))
-
-(defun strk/open-habits-file ()
-    "Open my habit file"
-    (interactive)
-    (find-file strk/habit-file))
 
 (defun strk/_habit-candidates ()
   "Return an alist of (HEADING . MARKER) for all headings with STYLE=\"habit\" in `strk/habit-file'."
@@ -207,9 +204,15 @@ I've been using[[https:xenodium.com][ xenodium]]'s flat habits, but I want to be
          'file)
         (nreverse result))))) ;; return in buffer order
 
+;;;###autoload
+(defun strk/habits-open-file ()
+    "Open my habit file"
+    (interactive)
+    (find-file strk/habit-file))
+
 
 ;;;###autoload
-(defun strk/mark-habit-done ()
+(defun strk/habits-mark-done ()
   "Prompt for a habit (from `strk/habit-file') and mark the chosen one DONE.
 
 This uses the headline text for completion. When the headline is marked DONE,
@@ -237,8 +240,39 @@ and repeaters like .+1d are respected). The habit file is saved afterward."
           (save-buffer)))
       (message "Marked habit %s DONE" choice))))
 
+  ;;;###autoload
+  (defun strk/habits-get-stats ()
+    "Interactively select a habit using strk/_habit-candidates and open
+  org-habit-stats buffer."
+    (interactive)
+    (let* ((cands (strk/_habit-candidates)))
+      (unless cands
+          (user-error "No habits found in %s" strk/habit-file))
+        (let* ((names (mapcar #'car cands))
+               (choice (completing-read "Habit: " names nil t))
+               (marker (cdr (assoc choice cands))))
+          (unless marker
+            user-error "Selection not found")
+          (let ((buf (marker-buffer marker)))
+            (with-current-buffer buf
+              (goto-char (marker-position marker))
+              (org-back-to-heading t)
+              (let* ((habit-name (org-element-property :raw-value
+  (org-element-at-point)))
+                     (habit-data (org-habit-stats-parse-todo (point)))
+                     (habit-description (org-entry-get (point) "DESCRIPTION")))
+                (print habit-data)
+                (org-habit-stats-create-habit-buffer habit-data habit-name
+  habit-description 'file)))))))
+
 (map!
    :leader
-   :desc "Open Habit File" :gn "d f" #'strk/open-habits-file
-   :desc "Capture Habit" :gn "d c" #'strk/mark-habit-done)
+   :desc "Open Habit File" :gn "d f" #'strk/habits-open-file
+   :desc "Capture Habit" :gn "d c" #'strk/habits-mark-done
+   :desc "Habit Stats" :gn "d s" #'strk/habits-get-stats)
+#+end_src
+
+* Eat
+#+begin_src emacs-lisp :tangle yes
+(use-package! eat)
 #+end_src
