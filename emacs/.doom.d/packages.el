@@ -60,6 +60,20 @@
 (package! ef-themes)
 
 (package! org-habit-stats)
+(package! eat)
+
+(package! claude-code
+  :recipe
+  (:host github
+   :repo "stevemolitor/claude-code.el"
+   :depth 1
+   :files ("*.el" (:exclude "images/*"))))
+(package! monet
+  :recipe
+  (:host github
+   :repo "stevemolitor/monet"
+   ))
+
 (package! dwim-shell-command
   ;; To include shell-commands
   :recipe

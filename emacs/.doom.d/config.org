@@ -272,7 +272,18 @@ and repeaters like .+1d are respected). The habit file is saved afterward."
    :desc "Habit Stats" :gn "d s" #'strk/habits-get-stats)
 #+end_src
 
-* Eat
-#+begin_src emacs-lisp :tangle yes
+
+* Claude Code
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq strk/openai-key (auth-source-pick-first-password :host "api.openai.com"))
+(setq strk/anthropic-key (auth-source-pick-first-password :host "console.anthropic.com"))
+
 (use-package! eat)
-#+end_src
+(use-package! claude-code
+  :config
+  (setq claude-code-ide-terminal-backend 'eat)
+  )
+(use-package! monet)
+(add-hook 'claude-code-process-environment-functions #'monet-start-server-function)
+
+#+END_SRC
