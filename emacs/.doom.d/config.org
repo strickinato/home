@@ -182,7 +182,7 @@ I've been using[[https:xenodium.com][ xenodium]]'s flat habits, but I want to be
 
 (use-package! org-habit-stats)
 
-(setq strk/habit-file "~/Library/Mobile Documents/com~apple~CloudDocs/Org/MyHabits.org")
+(setq strk/habit-file "~/Library/Mobile Documents/com~apple~CloudDocs/Org/my-habits.org")
 (after! org
   (add-to-list 'org-modules 'org-habit)
   (add-to-list 'org-agenda-files strk/habit-file))
