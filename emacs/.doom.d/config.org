@@ -159,6 +159,11 @@ Doom exposes the following:
 
 #+begin_src emacs-lisp :tangle yes
 
+(use-package! denote
+  :config
+  (setq denote-directory "~/brain/denote")
+  )
+
 (setq deft-directory "~/brain")
 (setq deft-recursive t)
 (setq deft-use-filename-as-title t)
