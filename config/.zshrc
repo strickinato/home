@@ -1,4 +1,4 @@
-export DOTDIR=~/home
+export DOT_DIR=~/home
 
 # Setup Starship prompt
 eval "$(starship init zsh)"
@@ -26,6 +26,8 @@ export PATH=$HOME/.config/emacs/bin:$PATH
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
 [ "$HISTSIZE" -lt 50000 ] && HISTSIZE=50000
 [ "$SAVEHIST" -lt 10000 ] && SAVEHIST=10000
+
+export PATH=$HOME/.local/scripts/:$PATH
 
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
