@@ -8,6 +8,9 @@
 [includeIf "gitdir:~/code/"]
 	path = ~/.gitconfig-personal
 
+[github]
+	user = strickinato
+
 [init]
 	defaultBranch = main
 
