@@ -4,10 +4,49 @@
 ;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 * Who is it?
+** Me
 #+BEGIN_SRC emacs-lisp :tangle yes
 
 (setq user-full-name "Aaron Strick"
       user-mail-address "aaronstrick@gmail.com")
+
+#+END_SRC
+
+** Credentials
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(defmacro my-def-api-key (name host)
+    ;; This macro expands to this
+    ;;
+    ;; (defvar my-key-EXAMPLE nil
+    ;;     "API key for EXAMPLE retreived from auth-sources"
+    ;; )
+    ;;
+    ;; (defun my-get-key-EXAMPLE ()
+    ;;   (let ((key (auth-source-pick-first-password :host EXAMPLE_HOST)))
+    ;;     (if key
+    ;;         (setq my-key-EXAMPLE key)
+    ;;         (message "EXAMPLE API key not found!")
+    ;;         nil
+    ;;     )))
+  `(progn
+     (defvar ,(intern (format "my-key-%s" name)) nil
+       ,(format "API key for %s retrieved from auth-sources." name))
+
+     (defun ,(intern (format "my-get-key-%s" name)) ()
+       (let ((key (auth-source-pick-first-password :host ,host)))
+         (if key
+             (setq ,(intern (format "my-key-%s" name)) key)
+           (progn
+             (message "%s API key not found!" ,name)
+             nil))))))
+
+(my-def-api-key openai "api.openai.com")
+(my-def-api-key anthropic "console.anthropic.com")
+
+(after! auth-source
+  (my-get-key-openai)
+  (my-get-key-anthropic))
 
 #+END_SRC
 
@@ -290,8 +329,6 @@ and repeaters like .+1d are respected). The habit file is saved afterward."
 
 * Claude Code
 #+BEGIN_SRC emacs-lisp :tangle yes
-(setq strk/openai-key (auth-source-pick-first-password :host "api.openai.com"))
-(setq strk/anthropic-key (auth-source-pick-first-password :host "console.anthropic.com"))
 
 (use-package! eat)
 (use-package! claude-code
