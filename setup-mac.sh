@@ -21,6 +21,9 @@ ln -s $MY_CONFIG_DIR/nvim $HOME/.config/nvim
 ln -s $MY_CONFIG_DIR/tmux $HOME/.config/tmux
 ln -s $MY_CONFIG_DIR/ghostty $HOME/.config/ghostty
 
+mkdir -p ~/.config/glide
+ln -s $MY_CONFIG_DIR/glide/glide.ts $HOME/.config/glide/glide.ts
+
 ln -s $DOT_DIR/scripts ~/.local/scripts
 
 
