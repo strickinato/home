@@ -97,21 +97,27 @@ Doom exposes the following:
 
 ** Cleanup dired a bit
 
-#+begin_src :tangle yes
+#+BEGIN_SRC emacs-lisp :tangle yes
 
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 
-#+end_src
+#+END_SRC
 ** Popups
-#+begin_src emacs-lisp :tangle yes
+#+BEGIN_SRC emacs-lisp :tangle yes
 
 (add-to-list 'display-buffer-alist
              '("\\*info\\*"
                (display-buffer-in-side-window)
                (window-width . 0.33)
-               (side . right)))
-
-#+end_src
+               (side . right))
+             )
+(add-to-list 'display-buffer-alist
+             '("\\*ChatGPT\\*"
+               (display-buffer-in-side-window)
+               (window-width . 0.5)
+               (side . right))
+             )
+#+END_SRC
 
 * Random
 #+BEGIN_SRC emacs-lisp :tangle yes
