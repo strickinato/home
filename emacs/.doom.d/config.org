@@ -59,6 +59,10 @@ For example $DOOM_DIR/packages/my_package/files.el
 (let ((default-directory (expand-file-name "packages" doom-private-dir)))
   (normal-top-level-add-subdirs-to-load-path))
 
+(add-to-list 'custom-theme-load-path
+  (expand-file-name "themes/" doom-user-dir))
+
+
 #+END_SRC
 
 * Appearances
