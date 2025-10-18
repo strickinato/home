@@ -79,8 +79,9 @@ Doom exposes the following:
 (setq doom-font (font-spec :family "Fira Code" :size 14))
 (setq doom-variable-pitch-font (font-spec :family "Gill Sans" :size 14))
 
-;;(setq doom-theme 'doom-horizon)
-(setq doom-theme 'ef-dark)
+;; (setq doom-theme 'doom-horizon)
+;; (setq doom-theme 'ef-dark)
+(setq doom-theme 'strick)
 
 #+END_SRC
 
@@ -95,6 +96,7 @@ Doom exposes the following:
   :config
   (global-hide-mode-line-mode 1))
 
+(use-package! perfect-margin)
 
 
 #+END_SRC
@@ -139,6 +141,7 @@ Doom exposes the following:
     :desc "Project Eshell" :gn "p SPC" #'project-eshell
     :desc "Toggle modeline" :gn "t m" #'global-hide-mode-line-mode
     :desc "dirvish" :gn "-" #'dirvish
+    :desc "Expand Region" :gn "v" #'er/expand-region
     )
 #+END_SRC
 

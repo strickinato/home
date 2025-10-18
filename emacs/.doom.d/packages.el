@@ -89,3 +89,8 @@
 (package! denote)
 (package! denote-org)
 
+
+(package! plz)
+(package! perfect-margin)
+
+(package! expand-region)
