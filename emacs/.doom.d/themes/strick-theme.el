@@ -6,10 +6,14 @@
 ;;
 ;;; Commentary:
 ;;
+;; This is based on some ideas in this blog post: https://tonsky.me/blog/syntax-highlighting/
+;; 
+;; But instead of using alabaster as a starting point - I started with =doom-homage-black= as the initial theme.
+;; 
 ;; A dark theme with pure black background, featuring lavender and teal
-;; highlights. Follows the alabaster philosophy of minimal, strategic
-;; highlighting: emphasize definitions, constants, strings, and comments
+;; highlights. Emphasize definitions, constants, strings, and comments
 ;; while keeping keywords, types, and common elements at default foreground.
+;;
 ;;
 ;;; Code:
 
@@ -171,14 +175,14 @@ determine the exact padding."
    (lsp-face-highlight-textual :inherit 'lsp-face-highlight-read)
    (lsp-face-highlight-write   :inherit 'lsp-face-highlight-read)
    ;;;; outline <built-in>
-   ((outline-1 &override) :foreground fg)
-   ((outline-2 &override) :foreground fg)
-   ((outline-3 &override) :foreground fg)
-   ((outline-4 &override) :foreground fg)
-   ((outline-5 &override) :foreground fg)
-   ((outline-6 &override) :foreground fg)
-   ((outline-7 &override) :foreground fg)
-   ((outline-8 &override) :foreground fg)
+   ((outline-1 &override) :foreground violet :inherit 'bold :height 1.3)
+   ((outline-2 &override) :foreground (doom-darken violet 0.1) :inherit 'bold :height 1.2)
+   ((outline-3 &override) :foreground (doom-darken violet 0.2) :inherit 'bold :height 1.1)
+   ((outline-4 &override) :foreground (doom-darken violet 0.3) :inherit 'bold)
+   ((outline-5 &override) :foreground (doom-darken violet 0.4))
+   ((outline-6 &override) :foreground (doom-darken violet 0.5))
+   ((outline-7 &override) :foreground (doom-darken violet 0.6))
+   ((outline-8 &override) :foreground (doom-darken violet 0.65))
    ;;;; org <built-in>
    ;; make unfinished cookie & todo keywords bright to grab attention
    ((org-todo &override) :foreground red)
@@ -197,6 +201,8 @@ determine the exact padding."
    ((org-block-begin-line &override) :foreground fg :slant 'italic)
    ((org-quote &override) :background base1)
    ((org-table &override) :foreground fg)
+   ((org-verbatim &override) :foreground teal)
+   ((org-code &override) :foreground teal)
    ;; org-agendamode: make "unimportant" things like distant deadlines and
    ;; things scheduled for today to be bleak.
    (org-upcoming-deadline         :foreground base8)
