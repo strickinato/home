@@ -94,3 +94,6 @@
 (package! perfect-margin)
 
 (package! expand-region)
+
+(package! org-present)
+(package! keycast)

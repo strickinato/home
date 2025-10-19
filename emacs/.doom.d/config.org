@@ -241,6 +241,38 @@ Doom exposes the following:
   (setq org-journal-time-prefix "\n## ")
   )
 #+end_src
+* Presentations
+- https://systemcrafters.net/emacs-tips/presentations-with-org-present/
+  
+#+begin_src elisp
+(use-package! keycast)
+
+(use-package! org-present)
+
+(defun my/org-present-prepare-slide (buffer-name heading)
+  ;; Show only top-level headlines
+  (org-overview)
+  ;; Unfold the current entry
+  (org-show-entry)
+  ;; Show only direct subheadings of the slide but don't expand them
+  (org-show-children))
+(add-hook 'org-present-after-navigate-functions 'my/org-present-prepare-slide)
+
+(defun my/org-present-start ()
+  (beginning-of-buffer)
+  (setq my-presentation-original-linenumbers display-line-numbers)
+  (setq display-line-numbers nil)
+  (keycast-header-line-mode t)
+  (org-present-big))
+
+(defun my/org-present-end ()
+  (setq display-line-numbers my-presentation-original-linenumbers)
+  (keycast-header-line-mode -1)
+  (org-present-small))
+
+;; Register hooks with org-present
+(add-hook 'org-present-mode-hook 'my/org-present-start)
+(add-hook 'org-present-mode-quit-hook 'my/org-present-end)
 
 
 * Habits
