@@ -244,7 +244,7 @@ Doom exposes the following:
 * Presentations
 - https://systemcrafters.net/emacs-tips/presentations-with-org-present/
   
-#+begin_src elisp
+#+begin_src elisp :tangle yes
 (use-package! keycast)
 
 (use-package! org-present)
