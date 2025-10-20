@@ -126,11 +126,20 @@ Doom exposes the following:
 #+END_SRC
 
 * Random
+** Hacks
 #+BEGIN_SRC emacs-lisp :tangle yes
 ;; I needed this to get some EWW webpages to load.
 ;; I don't really use that anymore, but I feel like this is a reasonable fix to keep.
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 #+END_SRC
+** Funcs
+#+begin_src elisp :tangle yes
+(setq world-clock-list
+      '(("America/Los_Angeles" "San Francisco")
+       ("America/New_York" "New York")
+       ("Europe/Paris" "Paris")))
+
+#+end_src
 
 * Bindings
 
