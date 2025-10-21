@@ -168,7 +168,6 @@ For example $DOOM_DIR/packages/my_package/files.el
   (setq lsp-lens-enable nil)
   (setq lsp-ui-doc-enable nil)
   (setq lsp-ui-sideline-enable nil)
-
   )
 
 (map!
@@ -250,6 +249,7 @@ in an Elm buffer or if no module declaration is found."
             (auth-source-pick-first-password :host "api.openai.com")))
 
   (setq chatgpt-shell-always-create-new nil))
+#+end_src
 ** Copilot
  #+begin_src emacs-lisp :tangle yes
 (use-package! copilot
@@ -272,7 +272,6 @@ in an Elm buffer or if no module declaration is found."
 (setq lsp-completion-provider :capf)
 #+end_src
 
-* Notetaking
 ** GPTel
 #+begin_src emacs-lisp :tangle yes
 (use-package! gptel
@@ -323,6 +322,7 @@ in an Elm buffer or if no module declaration is found."
 
   #+end_src
 
+* Notetaking
 #+begin_src emacs-lisp :tangle yes
 
 (use-package! denote
@@ -486,9 +486,6 @@ and repeaters like .+1d are respected). The habit file is saved afterward."
    :desc "Capture Habit" :gn "d c" #'strk/habits-mark-done
    :desc "Habit Stats" :gn "d s" #'strk/habits-get-stats)
 #+end_src
-
-
-#+BEGIN_SRC emacs-lisp :tangle yes
 
   :config
 
