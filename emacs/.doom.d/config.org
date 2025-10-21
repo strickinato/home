@@ -194,24 +194,30 @@ Doom exposes the following:
  )
 #+end_src
 
-* ChatGPTShell
+* LLMs
+** Agent Shell
+#+begin_src emacs-lisp :tangle yes
+
+(use-package! agent-shell
+  :config
+  (require 'acp) ;; I think this is necessary
+  (setq agent-shell-openai-authentication
+      (agent-shell-openai-make-authentication
+       :api-key (lambda () (auth-source-pick-first-password :host "api.openai.com")))))
+#+end_src
+
+** ChatGPT Shell
 #+begin_src emacs-lisp :tangle yes
 
 (use-package! chatgpt-shell
   :config
+  (setq chatgpt-shell-model-version "gpt-5")
   (setq chatgpt-shell-openai-key
         (lambda ()
             (auth-source-pick-first-password :host "api.openai.com")))
 
   (setq chatgpt-shell-always-create-new nil))
 
-
-(use-package! claude-code-ide
-  :custom (claude-code-ide-terminal-backend 'eat)
-  )
-  ;; :bind ("C-c C-'" . claude-code-ide-menu)
-  ;; :config
-  ;; (claude-code-ide-emacs-tools-setup))
 #+end_src
 
 
@@ -381,15 +387,8 @@ and repeaters like .+1d are respected). The habit file is saved afterward."
 #+end_src
 
 
-* Claude Code
 #+BEGIN_SRC emacs-lisp :tangle yes
 
-(use-package! eat)
-(use-package! claude-code
   :config
-  (setq claude-code-ide-terminal-backend 'eat)
-  )
-(use-package! monet)
-(add-hook 'claude-code-process-environment-functions #'monet-start-server-function)
 
 #+END_SRC

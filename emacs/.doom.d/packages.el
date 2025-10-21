@@ -77,6 +77,10 @@
    :repo "stevemolitor/monet"
    ))
 
+(package! shell-maker)
+(package! acp :recipe (:host github :repo "xenodium/acp.el"))
+(package! agent-shell :recipe (:host github :repo "xenodium/agent-shell"))
+
 (package! dwim-shell-command
   ;; To include shell-commands
   :recipe
