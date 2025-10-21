@@ -187,6 +187,45 @@ For example $DOOM_DIR/packages/my_package/files.el
   (flycheck-add-mode 'javascript-eslint 'web-mode)
  )
 #+end_src
+** Elm
+#+begin_src emacs-lisp :tangle yes
+
+;;;###autoload
+(defun strk/elm-yank-import-from-module ()
+  "Find the Elm `module` declaration in the current buffer and yank an `import` line.
+
+Example:
+  Buffer: module This.Is.A.Module exposing (..)
+  Yanked:  import This.Is.A.Module
+
+The import string is pushed into `kill-ring`. If Emacs is running in a GUI,
+the clipboard (CLIPBOARD selection) is also set. The function errors if not
+in an Elm buffer or if no module declaration is found."
+  (interactive)
+  ;; Basic Elm-buffer check: either elm-mode or .elm file
+  (unless (or (eq major-mode 'elm-mode)
+              (and buffer-file-name (string-match-p "\\.elm\\'" buffer-file-name)))
+    (user-error "Not in an Elm buffer"))
+  (save-excursion
+    (goto-char (point-min))
+    ;; Allow optional lowercase modifiers (e.g. "port module") before 'module'
+    (if (re-search-forward
+         "^\\s-*\\(?:[a-z]+\\s-+\\)*module\\s-+\\([A-Za-z0-9_.']+\\)" nil t)
+        (let* ((mod (match-string 1))
+               (import-line (format "import %s" mod)))
+          (kill-new import-line)
+          (when (fboundp 'gui-set-selection)
+            (ignore-errors (gui-set-selection 'CLIPBOARD import-line)))
+          (message "Yanked: %s" import-line))
+      (user-error "No module declaration found in buffer"))))
+
+(after! elm-mode
+  (map! :map elm-mode-map
+        :leader
+        :desc "Elm: yank import from module"
+        "m f y" #'strk/elm-yank-import-from-module))
+
+#+end_src
 
 * LLMs
 ** Agent Shell
