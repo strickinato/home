@@ -250,7 +250,26 @@ in an Elm buffer or if no module declaration is found."
             (auth-source-pick-first-password :host "api.openai.com")))
 
   (setq chatgpt-shell-always-create-new nil))
+** Copilot
+ #+begin_src emacs-lisp :tangle yes
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind
+    (:map copilot-completion-map
+              ("M-l" . 'copilot-accept-completion)
+              ("C-l" . 'copilot-accept-completion-by-word)
+              )
+  :config
+  (add-to-list 'copilot-indentation-alist '(elm-mode . 4))
+  (setq copilot-indent-offset-warning-disable t)
+  (setq copilot-max-char-warning-disabled t)
+  (setq copilot-node-executable "/Users/aaronstrick/.local/share/mise/installs/node/20/bin/node")
 
+  ;; https://github.com/emacs-lsp/lsp-mode/issues/4679
+  (setq lsp-copilot-applicable-fn (lambda (&rest _) nil))
+  )
+
+(setq lsp-completion-provider :capf)
 #+end_src
 
 * Notetaking
