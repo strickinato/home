@@ -486,7 +486,3 @@ and repeaters like .+1d are respected). The habit file is saved afterward."
    :desc "Capture Habit" :gn "d c" #'strk/habits-mark-done
    :desc "Habit Stats" :gn "d s" #'strk/habits-get-stats)
 #+end_src
-
-  :config
-
-#+END_SRC
