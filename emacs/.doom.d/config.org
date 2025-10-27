@@ -323,6 +323,67 @@ in an Elm buffer or if no module declaration is found."
   #+end_src
 
 * Notetaking
+** Inbox
+Configuration for my org-mode inbox file synced via iCloud and Plain Org iOS app.
+
+#+begin_src emacs-lisp :tangle yes
+(setq strk/inbox-file "~/Library/Mobile Documents/com~apple~CloudDocs/Org/phone-notes.org")
+
+;; Add inbox file as bookmark
+(after! bookmark
+  (bookmark-store "inbox" 
+                  `((filename . ,strk/inbox-file)
+                    (position . 1))
+                  nil))
+
+;; Function to jump to inbox
+;;;###autoload
+(defun strk/open-inbox ()
+  "Open the org-mode inbox file."
+  (interactive)
+  (find-file strk/inbox-file))
+
+;; Function to count TODO items in inbox
+;;;###autoload
+(defun strk/count-inbox-todos ()
+  "Count the number of TODO items in the inbox file."
+  (let ((file (expand-file-name strk/inbox-file)))
+    (if (file-exists-p file)
+        (with-current-buffer (find-file-noselect file)
+          (let ((count 0))
+            (org-map-entries
+             (lambda ()
+               (when (member (org-get-todo-state) org-not-done-keywords)
+                 (setq count (1+ count))))
+             nil 'file)
+            count))
+      0)))
+
+;; Key binding: SPC d i to open inbox
+(map!
+   :leader
+   :desc "Open Inbox" :gn "d i" #'strk/open-inbox)
+
+;; Add TODO count to Doom dashboard
+(defun strk/inbox-menu-title ()
+  "Return inbox menu title with TODO count."
+  (let ((count (strk/count-inbox-todos)))
+    (if (zerop count)
+        "Inbox (all done!)"
+      (format "Inbox (%d TODOs)" count))))
+
+(after! doom-dashboard
+  (add-to-list '+doom-dashboard-menu-sections
+               `(,(strk/inbox-menu-title)
+                 :when (file-exists-p ,strk/inbox-file)
+                 :face (:inherit (doom-dashboard-menu-title bold))
+                 :action ,#'strk/open-inbox)
+               t))
+
+#+end_src
+
+#+RESULTS:
+
 ** Denote & Journal 
 #+begin_src emacs-lisp :tangle yes
 
@@ -487,3 +548,4 @@ and repeaters like .+1d are respected). The habit file is saved afterward."
    :desc "Capture Habit" :gn "d c" #'strk/habits-mark-done
    :desc "Habit Stats" :gn "d s" #'strk/habits-get-stats)
 #+end_src
+
