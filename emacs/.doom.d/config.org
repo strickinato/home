@@ -323,6 +323,7 @@ in an Elm buffer or if no module declaration is found."
   #+end_src
 
 * Notetaking
+** Denote & Journal 
 #+begin_src emacs-lisp :tangle yes
 
 (use-package! denote
