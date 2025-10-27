@@ -99,6 +99,38 @@ For example $DOOM_DIR/packages/my_package/files.el
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 
 #+END_SRC
+** Dashboard
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+
+(defun strk/dashboard-banner ()
+  "Custom ASCII art banner for dashboard."
+  (let* ((banner '(" ▗▄▄▖ ■   ▄▄▄ ▄ ▗▞▀▘█  ▄ ▄ ▄▄▄▄  ▗▞▀▜▌   ■   ▄▄▄  "
+                   "▐▌ ▗▄▟▙▄▖█    ▄ ▝▚▄▖█▄▀  ▄ █   █ ▝▚▄▟▌▗▄▟▙▄▖█   █ "
+                   " ▝▀▚▖▐▌  █    █     █ ▀▄ █ █   █        ▐▌  ▀▄▄▄▀ "
+                   "▗▄▄▞▘▐▌       █     █  █ █              ▐▌        "
+                   "     ▐▌                                 ▐▌        "
+                   "                                                  "
+                   "                                                  "))
+         (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+     (point)
+     (dolist (line banner (point))
+       (insert (+doom-dashboard--center
+                +doom-dashboard--width
+                line)
+               "\n"))
+     'face 'doom-dashboard-banner)))
+
+(setq +doom-dashboard-ascii-banner-fn #'strk/dashboard-banner)
+
+(setq +doom-dashboard-functions '(doom-dashboard-widget-banner
+                                    ;; TODO I'd like to put how many TODOs are in inbox file
+                                    ;; doom-dashboard-widget-shortmenu
+                                    doom-dashboard-widget-loaded))
+
+#+END_SRC
+
 ** Popups
 #+BEGIN_SRC emacs-lisp :tangle yes
 
@@ -364,25 +396,7 @@ Configuration for my org-mode inbox file synced via iCloud and Plain Org iOS app
    :leader
    :desc "Open Inbox" :gn "d i" #'strk/open-inbox)
 
-;; Add TODO count to Doom dashboard
-(defun strk/inbox-menu-title ()
-  "Return inbox menu title with TODO count."
-  (let ((count (strk/count-inbox-todos)))
-    (if (zerop count)
-        "Inbox (all done!)"
-      (format "Inbox (%d TODOs)" count))))
-
-(after! doom-dashboard
-  (add-to-list '+doom-dashboard-menu-sections
-               `(,(strk/inbox-menu-title)
-                 :when (file-exists-p ,strk/inbox-file)
-                 :face (:inherit (doom-dashboard-menu-title bold))
-                 :action ,#'strk/open-inbox)
-               t))
-
 #+end_src
-
-#+RESULTS:
 
 ** Denote & Journal 
 #+begin_src emacs-lisp :tangle yes
