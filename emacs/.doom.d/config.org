@@ -257,6 +257,39 @@ in an Elm buffer or if no module declaration is found."
         "m f y" #'strk/elm-yank-import-from-module))
 
 #+end_src
+** Git
+#+begin_src emacs-lisp :tangle yes
+
+(defun strk/git-checkout-recent-branches ()
+  "Checkout recent Git branches using completion."
+  (interactive)
+  (let* ((default-directory (locate-dominating-file default-directory ".git"))
+         (reflog-output (shell-command-to-string "git reflog show --pretty=format:%gs --date=relative"))
+         (branch-list (with-temp-buffer
+                        (insert reflog-output)
+                        (let ((branches '()))
+                          (goto-char (point-min))
+                          (while (re-search-forward "checkout: moving from \\([^ ]+\\) to " nil t)
+                            (let ((branch (match-string 1)))
+                              (unless (member branch branches)
+                                (push branch branches))))
+                          (nreverse branches)))))
+
+    ;; Check if we found any branches
+    (if (null branch-list)
+        (message "No recent branches found.")
+      (let* ((selected-branch (completing-read "Select branch: " branch-list)))
+        (if (and selected-branch (not (string= selected-branch "")))
+            (shell-command (concat "git checkout " (shell-quote-argument selected-branch)))
+          (message "No branch selected."))))))
+
+
+;; Key binding: SPC d i to open inbox
+(map!
+   :leader
+   :desc "Checkout recent branch" :gn "g b" #'strk/git-checkout-recent-branches)
+
+#+end_src
 
 * LLMs
 ** Agent Shell
