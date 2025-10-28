@@ -300,7 +300,11 @@ in an Elm buffer or if no module declaration is found."
   (require 'acp) ;; I think this is necessary
   (setq agent-shell-openai-authentication
       (agent-shell-openai-make-authentication
-       :api-key (lambda () (auth-source-pick-first-password :host "api.openai.com")))))
+       :api-key (lambda () (auth-source-pick-first-password :host "api.openai.com"))))
+  (setq agent-shell-anthropic-authentication
+      (agent-shell-anthropic-make-authentication
+       :api-key (lambda () (auth-source-pick-first-password :host "console.anthropic.com"))))
+)
 #+end_src
 
 ** ChatGPT Shell
