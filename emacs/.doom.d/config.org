@@ -298,6 +298,9 @@ in an Elm buffer or if no module declaration is found."
 (use-package! agent-shell
   :config
   (require 'acp) ;; I think this is necessary
+
+  (setq agent-shell-show-welcome-message nil)
+
   (setq agent-shell-openai-authentication
       (agent-shell-openai-make-authentication
        :api-key (lambda () (auth-source-pick-first-password :host "api.openai.com"))))
