@@ -44,7 +44,7 @@ defaults write com.runningwithcrayons.Alfred-Preferences syncfolder -string "~/h
 
 info "Setting up Doom Emacs"
 link $MY_CONFIG_DIR/emacs/.doom.d ~/.doom.d
-ln -sfn /opt/homebrew/opt/emacs-plus@31/Emacs.app /Applications/Emacs.app
+# ln -sfn /usr/local/Cellar/emacs-plus@31/31.0.50/Emacs.app /Applications/Emacs.app
 if [ ! -d ~/.config/emacs ]; then
     git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
     ~/.config/emacs/bin/doom install
