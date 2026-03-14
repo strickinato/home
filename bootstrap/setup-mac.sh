@@ -16,6 +16,13 @@ link() {
   fi
 }
 
+info "Installing Homebrew"
+if ! command -v brew &>/dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+    skip "Homebrew (already installed)"
+fi
+
 info "Installing Homebrew packages"
 brew bundle --file=$DOT_DIR/bootstrap/Brewfile
 
@@ -32,9 +39,10 @@ link $MY_CONFIG_DIR/emacs/emacs-plus/build.yml ~/.config/emacs-plus/build.yml
 link $DOT_DIR/scripts ~/.local/scripts
 
 info "Setting up Doom Emacs"
+link $MY_CONFIG_DIR/emacs/.doom.d ~/.doom.d
+ln -sfn /opt/homebrew/opt/emacs-plus@31/Emacs.app /Applications/Emacs.app
 if [ ! -d ~/.config/emacs ]; then
     git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
-    link $MY_CONFIG_DIR/emacs/.doom.d ~/.doom.d
     ~/.config/emacs/bin/doom install
 else
     skip "Doom Emacs (already installed)"
