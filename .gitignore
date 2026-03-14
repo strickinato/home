@@ -6,5 +6,5 @@ tmp/
 .local
 Brewfile.lock.json
 
-emacs/.doom.d/config.el
-emacs/.doom.d/packages
+config/emacs/.doom.d/config.el
+config/emacs/.doom.d/packages

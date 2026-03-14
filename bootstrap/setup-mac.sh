@@ -17,24 +17,24 @@ link() {
 }
 
 info "Installing Homebrew packages"
-brew bundle --file=$DOT_DIR/Brewfile
+brew bundle --file=$DOT_DIR/bootstrap/Brewfile
 
 info "Creating symlinks"
-link $MY_CONFIG_DIR/.zshrc ~/.zshrc
-link $MY_CONFIG_DIR/.gitconfig ~/.gitconfig
+link $MY_CONFIG_DIR/zsh/.zshrc ~/.zshrc
+link $MY_CONFIG_DIR/git/.gitconfig ~/.gitconfig
 link $MY_CONFIG_DIR/ssh/config ~/.ssh/config
-link $MY_CONFIG_DIR/karabiner.json ~/.config/karabiner/karabiner.json
+link $MY_CONFIG_DIR/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
 link $MY_CONFIG_DIR/hammerspoon/init.lua ~/.config/hammerspoon/init.lua
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 link $MY_CONFIG_DIR/ghostty ~/.config/ghostty
 link $MY_CONFIG_DIR/glide/glide.ts ~/.config/glide/glide.ts
-link $MY_CONFIG_DIR/emacs-plus/build.yml ~/.config/emacs-plus/build.yml
+link $MY_CONFIG_DIR/emacs/emacs-plus/build.yml ~/.config/emacs-plus/build.yml
 link $DOT_DIR/scripts ~/.local/scripts
 
 info "Setting up Doom Emacs"
 if [ ! -d ~/.config/emacs ]; then
     git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
-    link $DOT_DIR/emacs/.doom.d ~/.doom.d
+    link $MY_CONFIG_DIR/emacs/.doom.d ~/.doom.d
     ~/.config/emacs/bin/doom install
 else
     skip "Doom Emacs (already installed)"
@@ -65,7 +65,7 @@ defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 info "Setting up capslock-to-escape remap"
 # https://rakhesh.com/mac/using-hidutil-to-map-macos-keyboard-keys/
 # https://hidutil-generator.netlify.app/
-cp $MY_CONFIG_DIR/com.local.KeyRemapping.plist ~/Library/LaunchAgents/com.local.KeyRemapping.plist
+cp $MY_CONFIG_DIR/macos/com.local.KeyRemapping.plist ~/Library/LaunchAgents/com.local.KeyRemapping.plist
 launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.local.KeyRemapping.plist 2>/dev/null
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.local.KeyRemapping.plist
 
