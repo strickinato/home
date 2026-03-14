@@ -16,6 +16,7 @@ brew "mise"
 brew "fd"
 brew "rg"
 brew "jq"
+brew "pngpaste"
 brew "coreutils"
 tap "d12frosted/emacs-plus"
 brew "emacs-plus@29", args: ["with-imagemagick", "with-native-comp", "with-modern-doom3-icon"]
