@@ -295,6 +295,7 @@ in an Elm buffer or if no module declaration is found."
   (require 'acp) ;; I think this is necessary
 
   (setq agent-shell-show-welcome-message nil)
+  (setq agent-shell-header-style 'text)
 
   (setq agent-shell-openai-authentication
       (agent-shell-openai-make-authentication
@@ -302,7 +303,84 @@ in an Elm buffer or if no module declaration is found."
   (setq agent-shell-anthropic-authentication
       (agent-shell-anthropic-make-authentication
        :api-key (lambda () (auth-source-pick-first-password :host "console.anthropic.com"))))
+  
+  (setq agent-shell-session-strategy 'prompt)
+  (setq agent-shell-prefer-viewport-interaction t)
+
+  (defun my/agent-shell-viewport-back ()
+    "Navigate backward through agent-shell history from either viewport mode."
+    (interactive)
+    (cond
+     ((derived-mode-p 'agent-shell-viewport-edit-mode)
+      (agent-shell-viewport-compose-peek-last))
+     ((derived-mode-p 'agent-shell-viewport-view-mode)
+      (agent-shell-viewport-previous-page))))
+
+  (defun my/agent-shell-viewport-forward ()
+    "Navigate forward through agent-shell history from either viewport mode."
+    (interactive)
+    (cond
+     ((derived-mode-p 'agent-shell-viewport-view-mode)
+      (agent-shell-viewport-next-page))
+     ((derived-mode-p 'agent-shell-viewport-edit-mode)
+      (message "Already at newest"))))
+
+  (defun my/agent-shell-viewport--final-text ()
+    "Return the last agent message chunk body from the viewport."
+    (save-excursion
+      (goto-char (point-min))
+      (let ((last-msg-id nil)
+            (match nil)
+            (seen nil))
+        (while (setq match (text-property-search-forward
+                            'agent-shell-ui-state nil
+                            (lambda (_ val) val) t))
+          (let* ((state (get-text-property (prop-match-beginning match)
+                                            'agent-shell-ui-state))
+                 (qid (map-elt state :qualified-id)))
+            (unless (member qid seen)
+              (push qid seen)
+              (when (string-match "agent_message_chunk" qid)
+                (setq last-msg-id qid)))))
+        (when (and last-msg-id agent-shell-ui--content-store)
+          (string-trim
+           (or (gethash (concat last-msg-id "-body")
+                        agent-shell-ui--content-store)
+               ""))))))
+
+  (defun my/agent-shell-viewport-revise ()
+    "Quote the final response text into a compose buffer for revision."
+    (interactive)
+    (unless (derived-mode-p 'agent-shell-viewport-view-mode)
+      (user-error "Not in a viewport view buffer"))
+    (let ((text (or (my/agent-shell-viewport--final-text) "")))
+      (when (string-empty-p text)
+        (user-error "No response text to revise"))
+      (let ((quoted (mapconcat (lambda (line) (concat "> " line))
+                               (split-string text "\n")
+                               "\n")))
+        ;; Manually switch to edit mode without busy check
+        (with-current-buffer (agent-shell-viewport--shell-buffer)
+          (goto-char (point-max)))
+        (agent-shell-viewport-edit-mode)
+        (agent-shell-viewport--initialize)
+        (insert "I've made some comments and changes to the plan, see below and make a revision:\n\n"
+                quoted "\n")
+        (goto-char (point-min)))))
+
+  (map!
+   :map agent-shell-viewport-view-mode-map
+   :gn "C-j" #'my/agent-shell-viewport-back
+   :gn "C-k" #'my/agent-shell-viewport-forward
+   :gn "C-r" #'agent-shell-viewport-reply
+   :gn "C-e" #'my/agent-shell-viewport-revise)
+
+  (map!
+   :map agent-shell-viewport-edit-mode-map
+   :gn "C-j" #'my/agent-shell-viewport-back
+   :gn "C-k" #'my/agent-shell-viewport-forward)
 )
+
 #+end_src
 
 ** ChatGPT Shell
