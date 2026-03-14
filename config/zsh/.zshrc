@@ -4,9 +4,6 @@ export EDITOR='emacsclient -c'
 # Setup Starship prompt
 eval "$(starship init zsh)"
 
-# and point the config to the home directory
-export STARSHIP_CONFIG=$DOT_DIR/config/starship/starship.toml
-
 
 # Setup FZF key commands
 source <(fzf --zsh)
