@@ -60,7 +60,9 @@ defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 defaults write NSGlobalDomain KeyRepeat -int 4
 defaults write NSGlobalDomain InitialKeyRepeat -int 25
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
 info "Setting up capslock-to-escape remap"
 # https://rakhesh.com/mac/using-hidutil-to-map-macos-keyboard-keys/
