@@ -39,6 +39,9 @@ link $MY_CONFIG_DIR/glide/glide.ts ~/.config/glide/glide.ts
 link $MY_CONFIG_DIR/emacs/emacs-plus/build.yml ~/.config/emacs-plus/build.yml
 link $DOT_DIR/scripts ~/.local/scripts
 
+info "Setting up Alfred sync"
+defaults write com.runningwithcrayons.Alfred-Preferences syncfolder -string "~/home/config/alfred"
+
 info "Setting up Doom Emacs"
 link $MY_CONFIG_DIR/emacs/.doom.d ~/.doom.d
 ln -sfn /opt/homebrew/opt/emacs-plus@31/Emacs.app /Applications/Emacs.app
