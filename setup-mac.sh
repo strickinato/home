@@ -24,6 +24,10 @@ ln -s $MY_CONFIG_DIR/ghostty $HOME/.config/ghostty
 mkdir -p ~/.config/glide
 ln -s $MY_CONFIG_DIR/glide/glide.ts $HOME/.config/glide/glide.ts
 
+
+mkdir -p ~/.config/emacs-plus
+ln -s $MY_CONFIG_DIR/emacs-plus/build.yml $HOME/.config/emacs-plus/build.yml
+
 ln -s $DOT_DIR/scripts ~/.local/scripts
 
 
