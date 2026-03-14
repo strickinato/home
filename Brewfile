@@ -1,4 +1,4 @@
-tap "homebrew/cask-fonts"
+# Fonts
 cask "font-fira-code"
 
 brew "zsh"
@@ -19,7 +19,7 @@ brew "jq"
 brew "pngpaste"
 brew "coreutils"
 tap "d12frosted/emacs-plus"
-brew "emacs-plus@29", args: ["with-imagemagick", "with-native-comp", "with-modern-doom3-icon"]
+brew "emacs-plus@31", args: ["with-imagemagick", "with-xwidgets"]
 
 
 cask "alfred"

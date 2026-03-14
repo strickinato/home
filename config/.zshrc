@@ -9,7 +9,7 @@ export STARSHIP_CONFIG=$DOT_DIR/starship.toml
 
 
 # Setup FZF key commands
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
 
 # Setup direnv
 eval "$(direnv hook zsh)"
