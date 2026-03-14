@@ -134,18 +134,9 @@ For example $DOOM_DIR/packages/my_package/files.el
 ** Popups
 #+BEGIN_SRC emacs-lisp :tangle yes
 
-(add-to-list 'display-buffer-alist
-             '("\\*info\\*"
-               (display-buffer-in-side-window)
-               (window-width . 0.33)
-               (side . right))
-             )
-(add-to-list 'display-buffer-alist
-             '("\\*ChatGPT\\*"
-               (display-buffer-in-side-window)
-               (window-width . 0.5)
-               (side . right))
-             )
+(set-popup-rule! "^\\*info\\*" :ignore t)
+(set-popup-rule! "^\\*doom:scratch" :ignore t)
+
 #+END_SRC
 
 * Misc
@@ -167,6 +158,8 @@ For example $DOOM_DIR/packages/my_package/files.el
 * Bindings
 
 #+BEGIN_SRC emacs-lisp :tangle yes
+
+(setq evil-want-minibuffer t)
 
 (map!
     :leader
