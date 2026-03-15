@@ -160,6 +160,7 @@ For example $DOOM_DIR/packages/my_package/files.el
 #+BEGIN_SRC emacs-lisp :tangle yes
 
 (setq evil-want-minibuffer t)
+(add-hook 'minibuffer-setup-hook 'evil-insert-state)
 
 (map!
     :leader
