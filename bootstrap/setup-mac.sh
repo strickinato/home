@@ -84,3 +84,6 @@ launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.local.KeyRemapping.p
 info "Restarting Dock and Finder"
 killall Dock
 killall Finder
+
+info "Cleanshot keys"
+./bootstrap/disable-screenshot-keys.sh
