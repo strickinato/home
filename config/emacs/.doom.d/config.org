@@ -286,6 +286,13 @@ in an Elm buffer or if no module declaration is found."
    :desc "Checkout recent branch" :gn "g b" #'strk/git-checkout-recent-branches)
 
 #+end_src
+* Utilities
+** sqlite-extras
+#+begin_src emacs-lisp tangle: yes
+
+(use-package! sqlite-mode-extras
+  :hook ((sqlite-mode . sqlite-extras-minor-mode)))
+#+end_src
 
 * LLMs
 ** Agent Shell

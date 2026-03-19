@@ -105,3 +105,5 @@
 
 (package! org-present)
 (package! keycast)
+
+(package! sqlite-mode-extras)
