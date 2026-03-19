@@ -91,9 +91,6 @@
 (package! claude-code-ide
   :recipe (:host github :repo "manzaltu/claude-code-ide.el"))
 
-(package! copilot
-  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
-
 (package! denote)
 (package! denote-org)
 
