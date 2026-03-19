@@ -287,6 +287,22 @@ in an Elm buffer or if no module declaration is found."
 
 #+end_src
 * Utilities
+** Worksneeze
+#+begin_src emacs-lisp :tangle yes
+
+(let ((ws-dir (expand-file-name "~/code/worksneeze")))
+  (if (file-directory-p ws-dir)
+      (progn
+        (add-to-list 'load-path ws-dir)
+        ;; Managed outside of straight since it's my own package here
+        (require 'worksneeze)
+        (map!
+         :leader :desc "worksneeze" :gn "ll" #'worksneeze))
+    (warn "worksneeze not available")))
+
+#+end_src
+
+
 ** sqlite-extras
 #+begin_src emacs-lisp tangle: yes
 
@@ -452,7 +468,6 @@ in an Elm buffer or if no module declaration is found."
  )
 
   #+end_src
-
 * Notetaking
 ** Inbox
 Configuration for my org-mode inbox file synced via iCloud and Plain Org iOS app.
