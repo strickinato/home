@@ -677,3 +677,14 @@ and repeaters like .+1d are respected). The habit file is saved afterward."
    :desc "Habit Stats" :gn "d s" #'strk/habits-get-stats)
 #+end_src
 
+* Work Specific
+#+begin_src elisp :tangle yes
+
+(when (string-match-p "brilliant" (system-name))
+  (let ((work-config-dir (expand-file-name "~/work/emacs-config/")))
+    (if (file-directory-p work-config-dir)
+        (dolist (f (directory-files work-config-dir t "\\.el\\'"))
+          (load f t))
+      (warn "~/work/emacs-config/ not found"))))
+
+#+end_src
