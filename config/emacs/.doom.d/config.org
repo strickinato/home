@@ -39,8 +39,8 @@
              (message "%s API key not found!" ,name)
              nil))))))
 
-(my-def-api-key openai "api.openai.com")
-(my-def-api-key anthropic "console.anthropic.com")
+(my-def-api-key "openai" "api.openai.com")
+(my-def-api-key "anthropic" "console.anthropic.com")
 
 (after! auth-source
   (my-get-key-openai)
