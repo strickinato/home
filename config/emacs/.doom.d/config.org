@@ -153,6 +153,13 @@ For example $DOOM_DIR/packages/my_package/files.el
        ("America/New_York" "New York")
        ("Europe/Paris" "Paris")))
 
+(require 'dwim-shell-command)
+
+(defun dwim-shell-remove-quarantine ()
+    (interactive)
+    (dwim-shell-command-on-marked-files
+    "Quarantine: remove (xattr -r -d com.apple.quarantine)"
+    "xattr -r -d com.apple.quarantine '<<f>>'"))
 #+end_src
 
 * Bindings
