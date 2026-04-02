@@ -65,18 +65,6 @@
 (package! org-habit-stats)
 (package! eat)
 
-(package! claude-code
-  :recipe
-  (:host github
-   :repo "stevemolitor/claude-code.el"
-   :depth 1
-   :files ("*.el" (:exclude "images/*"))))
-(package! monet
-  :recipe
-  (:host github
-   :repo "stevemolitor/monet"
-   ))
-
 (package! shell-maker)
 (package! agent-shell)
 
@@ -87,9 +75,6 @@
    :repo "xenodium/dwim-shell-command"
    :files ("*.el")))
 
-
-(package! claude-code-ide
-  :recipe (:host github :repo "manzaltu/claude-code-ide.el"))
 
 (package! denote)
 (package! denote-org)
