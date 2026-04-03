@@ -1,3 +1,5 @@
 .agent-shell
 .DS_Store
 **/*.local
+.worksneeze
+.envrc
