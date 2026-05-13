@@ -53,6 +53,9 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 
+(package! ghostel)
+(package! evil-ghostel)
+
 (package! graphviz-dot-mode)
 
 (package! git-link)
@@ -63,7 +66,6 @@
 (package! ef-themes)
 
 (package! org-habit-stats)
-(package! eat)
 
 (package! shell-maker)
 (package! agent-shell)

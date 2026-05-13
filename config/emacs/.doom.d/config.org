@@ -173,7 +173,6 @@ For example $DOOM_DIR/packages/my_package/files.el
     :leader
     :desc "RUN COMMAND" :gn "SPC" #'execute-extended-command
     :desc "avy jump somewhere" :gn "s j" #'avy-goto-char-timer
-    :desc "Project Eshell" :gn "p SPC" #'project-eshell
     :desc "Toggle modeline" :gn "t m" #'global-hide-mode-line-mode
     :desc "dirvish" :gn "-" #'dirvish
     :desc "Expand Region" :gn "v" #'er/expand-region
@@ -294,6 +293,16 @@ in an Elm buffer or if no module declaration is found."
 
 #+end_src
 * Utilities
+** Ghostel
+#+begin_src elisp :tangle yes
+
+(use-package! ghostel)
+(use-package! evil-ghostel
+  :hook (ghostel-mode . evil-ghostel-mode))
+
+(map! :leader
+      :desc "Project Eshell" :gn "p SPC" #'ghostel-project)
+#+end_src
 ** Worksneeze
 #+begin_src emacs-lisp :tangle yes
 
