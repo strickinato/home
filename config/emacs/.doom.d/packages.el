@@ -88,10 +88,12 @@
 
 ;; Notes & Personal
 (package! org-habit-stats)
-(package! denote)
-(package! denote-org)
 (package! org-present)
 
+;; Vulpea
+(package! vulpea)
+(package! vulpea-ui)
+(package! vulpea-journal)
 
 
 

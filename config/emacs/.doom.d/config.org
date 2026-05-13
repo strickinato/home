@@ -593,13 +593,34 @@ Configuration for my org-mode inbox file synced via iCloud and Plain Org iOS app
 
 #+end_src
 
-** Denote & Journal 
+** Vulpea
 #+begin_src emacs-lisp :tangle yes
 
-(use-package! denote
+(use-package! vulpea
   :config
-  (setq denote-directory "~/brain/denote")
-  )
+  (setq vulpea-db-sync-directories '("~/brain/"))
+  (vulpea-db-autosync-mode +1))
+
+(use-package! vulpea-journal
+  :after vulpea
+  :config
+  (setq vulpea-journal-default-template
+        (vulpea-journal-template-daily
+         :file-name "journal/%Y-%m-%d.org"
+         :title "%Y-%m-%d %A"))
+  (vulpea-journal-setup)
+  (map!
+   :leader
+   :desc "Open journal" :gn "d d" #'vulpea-journal-today
+   :desc "Journal by date" :gn "d D" #'vulpea-journal-date)
+  (map! :map vulpea-journal-mode-map
+        :n "] d" #'vulpea-journal-next
+        :n "[ d" #'vulpea-journal-previous))
+
+#+end_src
+
+** Deft & Notes
+#+begin_src emacs-lisp :tangle yes
 
 (setq deft-directory "~/brain")
 (setq deft-recursive t)
@@ -607,7 +628,6 @@ Configuration for my org-mode inbox file synced via iCloud and Plain Org iOS app
 (map!
     :leader
     :desc "Deft File" :gn "n f" #'deft-find-file)
-
 
 ;; https://emacs.stackexchange.com/questions/71100/pasting-images-from-clipboard-into-orgmode
 (after! org-download
@@ -618,13 +638,6 @@ Configuration for my org-mode inbox file synced via iCloud and Plain Org iOS app
         org-download-abbreviate-filename-function #'file-relative-name)
       (setq org-download-link-format-function #'org-download-link-format-function-default))
 
-(after! org-journal
-  (setq org-journal-dir "~/brain/Inbox/")
-  (setq org-journal-file-format "%Y-%m-%d.md")
-  (setq org-journal-date-format "%Y-%m-%d")
-  (setq org-journal-date-prefix "# ")
-  (setq org-journal-time-prefix "\n## ")
-  )
 #+end_src
 * Presentations
 - https://systemcrafters.net/emacs-tips/presentations-with-org-present/
