@@ -73,6 +73,7 @@
    :files ("*.el")))
 
 (package! elfeed-protocol)
+(package! hyperbole)
 
 ;; Appearance
 (package! modus-themes)

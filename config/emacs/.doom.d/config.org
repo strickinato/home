@@ -330,6 +330,16 @@ in an Elm buffer or if no module declaration is found."
 (use-package! sqlite-mode-extras
   :hook ((sqlite-mode . sqlite-extras-minor-mode)))
 #+end_src
+** Hyperbole
+#+begin_src elisp :tangle yes
+
+(use-package! hyperbole
+    :init
+    (hyperbole-mode)
+    :config
+    (map! :leader :gn "SPC" #'action-key))
+
+#+end_src
 * WEB
 ** RSS
 #+begin_src elisp :tangle yes
