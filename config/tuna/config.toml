@@ -1,0 +1,95 @@
+schemaVersion = 1
+
+[[comboMode.bindings]]
+key = 'm'
+url = 'tuna://run/path.%252FSystem%252FApplications%252FMessages.app/Open'
+
+[[comboMode.bindings]]
+key = 't'
+url = 'tuna://run/TunaCore.AllApplicationsCatalog.Ghostty/Open'
+
+[[comboMode.bindings]]
+key = 'z'
+label = 'Zoom'
+url = 'tuna://run/Tuna.Internal.RecentObjectsCatalog.zoom.us/Open'
+
+[[comboMode.bindings]]
+key = 'e'
+url = 'tuna://run/Tuna.Internal.RecentObjectsCatalog.Emacs/Open'
+
+[[comboMode.bindings]]
+key = 's'
+url = 'tuna://run/path.%252FApplications%252FSlack.app/Open'
+
+[[comboMode.bindings]]
+key = 'space'
+url = 'tuna://run/Tuna.ModesCatalog.Fuzzy%20Mode/TunaCore.CommonActionsCatalog.Run'
+
+[[comboMode.bindings]]
+key = 'w'
+url = 'tuna://run/TunaCore.AllApplicationsCatalog.Google%20Chrome/Open'
+
+[[comboMode.bindings]]
+key = ','
+
+    [[comboMode.bindings.children]]
+    key = ','
+    url = 'tuna://run/Tuna.SettingsCatalog.Combo%20Mode%20Editor/Tuna.BasicActionsCatalog.Open%20Settings'
+
+[[comboMode.bindings]]
+key = 'M'
+
+    [[comboMode.bindings.children]]
+    key = 'd'
+    url = 'tuna://run/Tuna.Internal.RecentObjectsCatalog.Discord/Open'
+
+    [[comboMode.bindings.children]]
+    key = 'z'
+    url = 'tuna://run/TunaCore.AllApplicationsCatalog.Zulip/TunaCore.CommonActionsCatalog.Activate'
+
+[[comboMode.bindings]]
+key = 'f'
+
+    [[comboMode.bindings.children]]
+    key = 'h'
+    url = 'tuna://run/path.%252FUsers%252Fstrickinato/Open'
+
+    [[comboMode.bindings.children]]
+    key = 'D'
+    url = 'tuna://run/path.%252FUsers%252Fstrickinato%252FDownloads/Open'
+
+[hotkeys.app.activate]
+carbonKeyCode = 49
+carbonModifiers = 6912
+
+[hotkeys.app.comboMode]
+carbonKeyCode = 49
+carbonModifiers = 256
+
+[[hotkeys.custom]]
+id = 'AA7CB3D4-AAF4-4CCE-B119-006033954CC1'
+presentation = 'auto'
+
+    [hotkeys.custom.command]
+    actionIdentifier = 'Tuna.BasicActionsCatalog.Browse'
+    subjectIdentifier = 'Tuna.Internal.ClipboardProxyCatalog.Clipboard History'
+
+    [hotkeys.custom.shortcut]
+    carbonKeyCode = 9
+    carbonModifiers = 768
+
+[settings]
+comboModeCheatsheetExpandGroups = true
+comboModeCheatsheetShowDetails = false
+comboModeCheatsheetShowIcons = false
+comboModeThemeStyle = 'cheatsheet'
+mainWindowAnimationsEnabled = false
+talkModeModifierTrigger = 'hyper'
+talkModeTriggerType = 'disabled'
+themeIdentifier = 'com.brnbw.tuna.themes.NormieBar'
+
+[[catalogSettings]]
+catalogIdentifier = 'com.brnbw.tuna.themes.default'
+
+    [catalogSettings.values]
+    ThemeTint = 'custom:FB00FF'

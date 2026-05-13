@@ -35,6 +35,7 @@ link $MY_CONFIG_DIR/hammerspoon/init.lua ~/.config/hammerspoon/init.lua
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 link $MY_CONFIG_DIR/starship/starship.toml ~/.config/starship.toml
 link $MY_CONFIG_DIR/ghostty ~/.config/ghostty
+link $MY_CONFIG_DIR/tuna ~/.config/tuna
 link $MY_CONFIG_DIR/glide/glide.ts ~/.config/glide/glide.ts
 link $MY_CONFIG_DIR/emacs/emacs-plus/build.yml ~/.config/emacs-plus/build.yml
 link $DOT_DIR/scripts ~/.local/scripts

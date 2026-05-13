@@ -11,7 +11,7 @@ hs.hotkey.bind(hyper, "e", function()
 end)
 
 hs.hotkey.bind(hyper, "t", function()
-  hs.application.launchOrFocus("ghostty")
+  hs.application.launchOrFocus("tuna")
 end)
 
 hs.hotkey.bind(hyper, "s", function()
