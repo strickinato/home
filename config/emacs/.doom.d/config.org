@@ -639,6 +639,35 @@ Configuration for my org-mode inbox file synced via iCloud and Plain Org iOS app
       (setq org-download-link-format-function #'org-download-link-format-function-default))
 
 #+end_src
+** Agenda
+#+begin_src elisp :tangle yes
+
+(defun strk/brain-agenda-files ()
+  "Collect org-agenda files from ~/brain, excluding Archive and hidden directories."
+  (let ((excluded-dirs (regexp-opt '("Archive" ".obsidian" ".sync" ".stfolder" "${hyperb:dir}"))))
+    (append
+     ;; Flat directories — org-agenda handles these dynamically
+     (list (expand-file-name "~/brain/")
+           (expand-file-name "~/brain/journal/")
+           (expand-file-name "~/brain/notes/"))
+     ;; Recursive directories — static at startup
+     (directory-files-recursively
+      (expand-file-name "~/brain/Projects/") "\\.org$" nil
+      (lambda (dir) (not (string-match-p excluded-dirs dir))))
+     (directory-files-recursively
+      (expand-file-name "~/brain/Areas/") "\\.org$" nil
+      (lambda (dir) (not (string-match-p excluded-dirs dir))))
+     (directory-files-recursively
+      (expand-file-name "~/brain/Resources/") "\\.org$" nil
+      (lambda (dir) (not (string-match-p excluded-dirs dir)))))))
+
+(after! org
+  (add-to-list 'org-modules 'org-habit)
+  (setq org-agenda-files
+        (append (strk/brain-agenda-files)
+                (list strk/inbox-file))))
+
+#+end_src
 * Presentations
 - https://systemcrafters.net/emacs-tips/presentations-with-org-present/
   
@@ -673,102 +702,6 @@ Configuration for my org-mode inbox file synced via iCloud and Plain Org iOS app
   (add-hook 'org-present-mode-quit-hook 'my/org-present-end)
   )
 
-#+end_src
-
-* Habits
-I've been using[[https:xenodium.com][ xenodium]]'s flat habits, but I want to be able to super quickly mark things on my computer. org-habit weirdly doesn't seem to have support for this... I guess because they expect you to fully be on org mode (which I'm not). So this code allows me to update the habits
-#+begin_src emacs-lisp :tangle yes
-
-(use-package! org-habit-stats)
-
-(setq strk/habit-file "~/Library/Mobile Documents/com~apple~CloudDocs/Org/my-habits.org")
-(after! org
-  (add-to-list 'org-modules 'org-habit)
-  (add-to-list 'org-agenda-files strk/habit-file))
-
-(defun strk/_habit-candidates ()
-  "Return an alist of (HEADING . MARKER) for all headings with STYLE=\"habit\" in `strk/habit-file'."
-  (let* ((file (expand-file-name strk/habit-file))
-         (buf (find-file-noselect file)))
-    (with-current-buffer buf
-      (org-mode) ;; ensure org functions are available
-      (let (result)
-        (org-map-entries
-         (lambda ()
-           ;; store a copy-marker so it stays valid across buffer changes
-           (let ((title (org-get-heading t t t t))
-                 (m (copy-marker (point))))
-     (push (cons title m) result)))
-         "STYLE=\"habit\"" ;; match entries marked as habits
-         'file)
-        (nreverse result))))) ;; return in buffer order
-
-;;;###autoload
-(defun strk/habits-open-file ()
-    "Open my habit file"
-    (interactive)
-    (find-file strk/habit-file))
-
-
-;;;###autoload
-(defun strk/habits-mark-done ()
-  "Prompt for a habit (from `strk/habit-file') and mark the chosen one DONE.
-
-This uses the headline text for completion. When the headline is marked DONE,
-Org's normal state-change/logging code will run (so REPEAT_TO_STATE, LOGGING,
-and repeaters like .+1d are respected). The habit file is saved afterward."
-  (interactive)
-  (let* ((cands (strk/_habit-candidates)))
-    (unless cands
-      (user-error "No habits found in %s" strk/habit-file))
-    (let* ((names (mapcar #'car cands))
-           (choice (completing-read "Habit: " names nil t))
-           (marker (cdr (assoc choice cands))))
-      (unless marker
-        (user-error "Selection not found"))
-      (let ((buf (marker-buffer marker)))
-        (unless (buffer-live-p buf)
-          (user-error "Buffer for habit file not available"))
-        (with-current-buffer buf
-          ;; go to the heading and mark DONE
-          (goto-char (marker-position marker))
-          (org-back-to-heading t)
-          ;; Use a canonical DONE keyword; if you have different keywords,
-          ;; you can change "DONE" to your desired keyword or compute it.
-          (org-todo "DONE")
-          (save-buffer)))
-      (message "Marked habit %s DONE" choice))))
-
-  ;;;###autoload
-  (defun strk/habits-get-stats ()
-    "Interactively select a habit using strk/_habit-candidates and open
-  org-habit-stats buffer."
-    (interactive)
-    (let* ((cands (strk/_habit-candidates)))
-      (unless cands
-          (user-error "No habits found in %s" strk/habit-file))
-        (let* ((names (mapcar #'car cands))
-               (choice (completing-read "Habit: " names nil t))
-               (marker (cdr (assoc choice cands))))
-          (unless marker
-            user-error "Selection not found")
-          (let ((buf (marker-buffer marker)))
-            (with-current-buffer buf
-              (goto-char (marker-position marker))
-              (org-back-to-heading t)
-              (let* ((habit-name (org-element-property :raw-value
-  (org-element-at-point)))
-                     (habit-data (org-habit-stats-parse-todo (point)))
-                     (habit-description (org-entry-get (point) "DESCRIPTION")))
-                (print habit-data)
-                (org-habit-stats-create-habit-buffer habit-data habit-name
-  habit-description 'file)))))))
-
-(map!
-   :leader
-   :desc "Open Habit File" :gn "d f" #'strk/habits-open-file
-   :desc "Capture Habit" :gn "d c" #'strk/habits-mark-done
-   :desc "Habit Stats" :gn "d s" #'strk/habits-get-stats)
 #+end_src
 
 * Work Specific
