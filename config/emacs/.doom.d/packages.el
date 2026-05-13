@@ -53,23 +53,18 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
 
+;; Utilities & Langs
 (package! ghostel)
 (package! evil-ghostel)
 
-(package! graphviz-dot-mode)
-
-(package! git-link)
-
 (package! load-env-vars)
-(package! chatgpt-shell)
-(package! modus-themes)
-(package! ef-themes)
+(package! git-link)
+(package! plz)
+(package! expand-region)
+(package! keycast)
 
-(package! org-habit-stats)
-
-(package! shell-maker)
-(package! agent-shell)
-
+(package! graphviz-dot-mode)
+(package! sqlite-mode-extras)
 (package! dwim-shell-command
   ;; To include shell-commands
   :recipe
@@ -77,17 +72,24 @@
    :repo "xenodium/dwim-shell-command"
    :files ("*.el")))
 
+;; Appearance
+(package! modus-themes)
+(package! ef-themes)
+(package! perfect-margin)
+(package! hide-mode-line)
 
+;; LLM
+(package! shell-maker)
+(package! chatgpt-shell)
+(package! agent-shell)
+
+;; Notes & Personal
+(package! org-habit-stats)
 (package! denote)
 (package! denote-org)
-
-
-(package! plz)
-(package! perfect-margin)
-
-(package! expand-region)
-
 (package! org-present)
-(package! keycast)
 
-(package! sqlite-mode-extras)
+
+
+
+
