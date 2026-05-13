@@ -41,10 +41,13 @@
 
 (my-def-api-key "openai" "api.openai.com")
 (my-def-api-key "anthropic" "console.anthropic.com")
+(my-def-api-key "strickinatorss" "rss.thebad.dad")
 
 (after! auth-source
   (my-get-key-openai)
-  (my-get-key-anthropic))
+  (my-get-key-anthropic)
+  (my-get-key-strickinatorss)
+  )
 
 #+END_SRC
 
@@ -136,6 +139,7 @@ For example $DOOM_DIR/packages/my_package/files.el
 
 (set-popup-rule! "^\\*info\\*" :ignore t)
 (set-popup-rule! "^\\*doom:scratch" :ignore t)
+(set-popup-rule! "^\\*eww" :ignore t)
 
 #+END_SRC
 
@@ -324,6 +328,56 @@ in an Elm buffer or if no module declaration is found."
 
 (use-package! sqlite-mode-extras
   :hook ((sqlite-mode . sqlite-extras-minor-mode)))
+#+end_src
+* WEB
+** RSS
+#+begin_src elisp :tangle yes
+
+(use-package! elfeed-protocol
+  :config
+  (setq elfeed-use-curl t)
+  (setq elfeed-protocol-enabled-protocols '(fever))
+  (setq elfeed-protocol-fever-update-unread-only t)
+  (setq elfeed-protocol-feeds
+      '(("fever+https://strickinato@rss.thebad.dad"
+         :username "strickinato"
+         :password (my-get-key-strickinatorss)
+         :api-url "https://rss.thebad.dad/api/fever.php"
+         )))
+  (elfeed-protocol-enable)
+  (add-hook 'elfeed-search-mode-hook #'elfeed-update)
+  )
+
+(defun strk/open-elfeed-entry-in-browser ()
+  "Open the current elfeed entry's link in the default browser."
+  (interactive)
+  (let ((link (elfeed-entry-link elfeed-show-entry)))
+    (when link
+      (browse-url link))))
+
+(defun strk/open-elfeed-entry-in-eww ()
+  "Open the current elfeed entry's link in eww."
+  (interactive)
+  (let ((link (elfeed-entry-link elfeed-show-entry)))
+    (when link
+      (eww link))))
+
+(defun strk/open-elfeed-entry-in-xwidget ()
+  "Open the current elfeed entry's link in xwidget webkit."
+  (interactive)
+  (let ((link (elfeed-entry-link elfeed-show-entry)))
+    (when link
+      (xwidget-webkit-browse-url link))))
+
+(map! :leader
+      :desc "Open elfeed" "o E" #'elfeed)
+
+(map! :localleader
+      :map elfeed-show-mode-map
+      :desc "Open in eww"     "e" #'strk/open-elfeed-entry-in-eww
+      :desc "Open in xwidget" "o" #'strk/open-elfeed-entry-in-xwidget
+      :desc "Open in browser" "O" #'strk/open-elfeed-entry-in-browser)
+
 #+end_src
 
 * LLMs

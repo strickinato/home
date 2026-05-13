@@ -72,6 +72,8 @@
    :repo "xenodium/dwim-shell-command"
    :files ("*.el")))
 
+(package! elfeed-protocol)
+
 ;; Appearance
 (package! modus-themes)
 (package! ef-themes)
