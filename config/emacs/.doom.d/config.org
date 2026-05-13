@@ -91,6 +91,7 @@ For example $DOOM_DIR/packages/my_package/files.el
   (global-hide-mode-line-mode 1))
 
 (use-package! perfect-margin)
+(perfect-margin-mode +1)
 
 
 #+END_SRC
