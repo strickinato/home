@@ -42,11 +42,13 @@
 (my-def-api-key "openai" "api.openai.com")
 (my-def-api-key "anthropic" "console.anthropic.com")
 (my-def-api-key "strickinatorss" "rss.thebad.dad")
+(my-def-api-key "syncthing" "localhost:8384")
 
 (after! auth-source
   (my-get-key-openai)
   (my-get-key-anthropic)
   (my-get-key-strickinatorss)
+  (my-get-key-syncthing)
   )
 
 #+END_SRC
@@ -338,6 +340,14 @@ in an Elm buffer or if no module declaration is found."
     (hyperbole-mode)
     :config
     (map! :leader :gn "SPC" #'action-key))
+
+#+end_src
+** Syncthing
+#+begin_src elisp :tangle yes
+
+(use-package! syncthing
+  :config
+  (setq syncthing-default-server-token (my-get-key-syncthing)))
 
 #+end_src
 * WEB

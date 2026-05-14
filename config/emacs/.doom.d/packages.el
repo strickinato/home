@@ -75,6 +75,8 @@
 (package! elfeed-protocol)
 (package! hyperbole)
 
+(package! syncthing)
+
 ;; Appearance
 (package! modus-themes)
 (package! ef-themes)
