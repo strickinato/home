@@ -96,11 +96,64 @@ For example $DOOM_DIR/packages/my_package/files.el
   :config
   (global-hide-mode-line-mode 1))
 
-(use-package! perfect-margin)
-(perfect-margin-mode +1)
 
 
 #+END_SRC
+
+
+** Perfect Margin Stuff
+#+begin_src elisp :tangle yes
+
+(use-package! perfect-margin)
+(perfect-margin-mode +1)
+
+(defun perfect-margin-wider ()
+  (interactive)
+  (setq perfect-margin-visible-width (+ perfect-margin-visible-width 5))
+  (perfect-margin-margin-frame))
+
+(defun perfect-margin-narrower ()
+  (interactive)
+  (setq perfect-margin-visible-width (- perfect-margin-visible-width 5))
+  (perfect-margin-margin-frame))
+
+(defun perfect-margin--adjust-font-size (step)
+  (let* ((old-height (face-attribute 'default :height))
+         (new-height (+ old-height step))
+         (ratio (/ (float old-height) new-height)))
+    (dolist (face '(default fixed-pitch variable-pitch))
+      (let ((h (face-attribute face :height)))
+        (when (integerp h)
+          (set-face-attribute face nil :height (round (/ h ratio))))))
+    (setq perfect-margin-visible-width
+          (round (* perfect-margin-visible-width ratio)))
+    (perfect-margin-margin-frame)
+    ;; mixed-pitch-set-height is t, so heights are baked into remap cookies.
+    ;; Re-enable mixed-pitch-mode in all active buffers to pick up new heights.
+    (dolist (buf (buffer-list))
+      (with-current-buffer buf
+        (when (bound-and-true-p mixed-pitch-mode)
+          (mixed-pitch-mode -1)
+          (mixed-pitch-mode +1))))))
+
+(defun perfect-margin-font-larger ()
+  "Increase font size and proportionally narrow the visible width."
+  (interactive)
+  (perfect-margin--adjust-font-size 10))
+
+(defun perfect-margin-font-smaller ()
+  "Decrease font size and proportionally widen the visible width."
+  (interactive)
+  (perfect-margin--adjust-font-size -10))
+
+(transient-define-prefix perfect-margin-adjust ()
+  "Adjust perfect-margin visible width."
+  [("<" "narrower"          perfect-margin-narrower    :transient t)
+   (">" "wider"             perfect-margin-wider       :transient t)
+   ("{" "font smaller"      perfect-margin-font-smaller :transient t)
+   ("}" "font larger"       perfect-margin-font-larger  :transient t)])
+
+#+end_src
 
 ** Org Mode Styles
 
