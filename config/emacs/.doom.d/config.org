@@ -104,7 +104,9 @@ For example $DOOM_DIR/packages/my_package/files.el
 ** Perfect Margin Stuff
 #+begin_src elisp :tangle yes
 
-(use-package! perfect-margin)
+(use-package! perfect-margin
+  :config
+  (setq perfect-margin-visible-width 88))
 (perfect-margin-mode +1)
 
 (defun perfect-margin-wider ()
