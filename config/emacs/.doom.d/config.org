@@ -77,7 +77,7 @@ For example $DOOM_DIR/packages/my_package/files.el
 #+BEGIN_SRC emacs-lisp :tangle yes
 
 (setq doom-font (font-spec :family "Fira Code" :size 14))
-(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14)) 
+(setq doom-variable-pitch-font (font-spec :family "Fira Sans" :size 14))
 
 ;; (setq doom-theme 'doom-horizon)
 ;; (setq doom-theme 'strick-light)
@@ -98,6 +98,86 @@ For example $DOOM_DIR/packages/my_package/files.el
 
 (use-package! perfect-margin)
 (perfect-margin-mode +1)
+
+
+#+END_SRC
+
+** Org Mode Styles
+
+Set org mode to render variable fonts
+
+#+begin_src emacs-lisp :tangle yes
+(after! org
+  (add-hook 'org-mode-hook #'mixed-pitch-mode))
+#+end_src
+
+** Font Picker
+
+Interactive font selection with live preview, modeled after =consult-theme=.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+
+(defun strk/refresh-mixed-pitch ()
+  "Toggle mixed-pitch-mode in all active buffers to pick up font changes."
+  (dolist (buf (buffer-list))
+    (with-current-buffer buf
+      (when (bound-and-true-p mixed-pitch-mode)
+        (mixed-pitch-mode -1)
+        (mixed-pitch-mode 1)))))
+
+(defun strk/font-state (doom-font-var)
+  "Return a consult state function for previewing fonts via DOOM-FONT-VAR."
+  (let* ((orig-doom-font (symbol-value doom-font-var))
+         (orig-size (font-get orig-doom-font :size))
+         (preview-timer nil))
+    (lambda (action candidate)
+      (pcase action
+        ('preview
+         (when preview-timer (cancel-timer preview-timer))
+         (when candidate
+           (setq preview-timer
+                 (run-with-timer 0.4 nil
+                   (lambda ()
+                     (ignore-errors
+                       (let ((spec (font-spec :family candidate :size orig-size)))
+                         (if (eq doom-font-var 'doom-font)
+                             (progn
+                               (set-face-attribute 'default nil :font spec)
+                               (set-face-attribute 'fixed-pitch nil :font spec))
+                           (set-face-attribute 'variable-pitch nil :font spec)))
+                       (strk/refresh-mixed-pitch)))))))
+        ('return
+         (when preview-timer (cancel-timer preview-timer))
+         (set doom-font-var (if candidate
+                                (font-spec :family candidate :size orig-size)
+                              orig-doom-font))
+         (doom/reload-font)
+         (strk/refresh-mixed-pitch))))))
+
+(defun strk/select-font ()
+  "Interactively select a font for the default face with live preview."
+  (interactive)
+  (let ((fonts (sort (delete-dups (font-family-list)) #'string-lessp)))
+    (consult--read
+     fonts
+     :prompt "Font: "
+     :sort nil
+     :require-match t
+     :state (strk/font-state 'doom-font))))
+
+(defun strk/select-variable-pitch-font ()
+  "Interactively select a font for the variable-pitch face (used by mixed-pitch) with live preview."
+  (interactive)
+  (let ((fonts (sort (delete-dups (font-family-list)) #'string-lessp)))
+    (consult--read
+     fonts
+     :prompt "Variable pitch font: "
+     :sort nil
+     :require-match t
+     :state (strk/font-state 'doom-variable-pitch-font))))
+
+#+END_SRC
+
 
 
 #+END_SRC
