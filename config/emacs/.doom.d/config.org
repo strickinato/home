@@ -146,12 +146,13 @@ For example $DOOM_DIR/packages/my_package/files.el
   (interactive)
   (perfect-margin--adjust-font-size -10))
 
-(transient-define-prefix perfect-margin-adjust ()
-  "Adjust perfect-margin visible width."
-  [("<" "narrower"          perfect-margin-narrower    :transient t)
-   (">" "wider"             perfect-margin-wider       :transient t)
-   ("{" "font smaller"      perfect-margin-font-smaller :transient t)
-   ("}" "font larger"       perfect-margin-font-larger  :transient t)])
+(after! transient
+  (transient-define-prefix perfect-margin-adjust ()
+    "Adjust perfect-margin visible width."
+    [("<" "narrower"          perfect-margin-narrower     :transient t)
+     (">" "wider"             perfect-margin-wider        :transient t)
+     ("{" "font smaller"      perfect-margin-font-smaller :transient t)
+     ("}" "font larger"       perfect-margin-font-larger  :transient t)]))
 
 #+end_src
 
