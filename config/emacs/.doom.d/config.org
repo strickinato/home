@@ -411,7 +411,7 @@ in an Elm buffer or if no module declaration is found."
 
 
 ** sqlite-extras
-#+begin_src emacs-lisp tangle: yes
+#+begin_src emacs-lisp :tangle yes
 
 (use-package! sqlite-mode-extras
   :hook ((sqlite-mode . sqlite-extras-minor-mode)))
