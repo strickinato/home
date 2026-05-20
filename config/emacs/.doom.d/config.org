@@ -444,9 +444,9 @@ in an Elm buffer or if no module declaration is found."
   (setq elfeed-protocol-enabled-protocols '(fever))
   (setq elfeed-protocol-fever-update-unread-only t)
   (setq elfeed-protocol-feeds
-      '(("fever+https://strickinato@rss.thebad.dad"
+      `(("fever+https://strickinato@rss.thebad.dad"
          :username "strickinato"
-         :password (my-get-key-strickinatorss)
+         :password ,(my-get-key-strickinatorss)
          :api-url "https://rss.thebad.dad/api/fever.php"
          )))
   (elfeed-protocol-enable)
