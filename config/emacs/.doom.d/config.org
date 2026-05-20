@@ -109,6 +109,12 @@ Set org mode to render variable fonts
 #+begin_src emacs-lisp :tangle yes
 (after! org
   (add-hook 'org-mode-hook #'mixed-pitch-mode))
+
+(use-package! mixed-pitch
+  :hook
+  (text-mode . mixed-pitch-mode)
+  :config
+  (setq mixed-pitch-set-height t))
 #+end_src
 
 ** Font Picker
