@@ -168,7 +168,9 @@ Set org mode to render variable fonts
   :hook
   (text-mode . mixed-pitch-mode)
   :config
-  (setq mixed-pitch-set-height t))
+  (setq mixed-pitch-set-height t)
+  (add-hook 'mixed-pitch-mode-hook
+            (lambda () (setq-local line-spacing (if mixed-pitch-mode 0.15 nil)))))
 #+end_src
 
 ** Font Picker
