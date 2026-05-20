@@ -1,6 +1,10 @@
 ;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 #+STARTUP: overview
 
+* Headers
+#+BEGIN_SRC emacs-lisp :tangle yes
+;;; config.el --- -*- lexical-binding: t; -*-
+#+END_SRC
 * Who is it?
 ** Me
 #+BEGIN_SRC emacs-lisp :tangle yes
