@@ -451,7 +451,10 @@ in an Elm buffer or if no module declaration is found."
 ** Ghostel
 #+begin_src elisp :tangle yes
 
-(use-package! ghostel)
+(use-package! ghostel
+  :config
+  (setq ghostel-module-directory doom-cache-dir))
+
 (use-package! evil-ghostel
   :hook (ghostel-mode . evil-ghostel-mode))
 
