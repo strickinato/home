@@ -90,7 +90,7 @@ comboModeThemeStyle = 'cheatsheet'
 mainWindowAnimationsEnabled = false
 talkModeModifierTrigger = 'hyper'
 talkModeTriggerType = 'disabled'
-themeIdentifier = 'com.brnbw.tuna.themes.NormieBar'
+themeIdentifier = 'com.brnbw.tuna.themes.nuggets'
 
 [[catalogSettings]]
 catalogIdentifier = 'com.brnbw.tuna.themes.default'
