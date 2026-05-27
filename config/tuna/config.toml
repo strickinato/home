@@ -58,6 +58,10 @@ key = 'f'
     key = 'D'
     url = 'tuna://run/path.%252FUsers%252Fstrickinato%252FDownloads/Open'
 
+[[comboMode.bindings]]
+key = 'L'
+url = 'tuna://run/TunaCore.AllApplicationsCatalog.Bitwarden/Open'
+
 [hotkeys.app.activate]
 carbonKeyCode = 49
 carbonModifiers = 6912
