@@ -72,6 +72,7 @@
    :repo "xenodium/dwim-shell-command"
    :files ("*.el")))
 
+(unpin! elfeed)
 (package! elfeed-protocol)
 (package! hyperbole)
 
