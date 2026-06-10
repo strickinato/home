@@ -260,30 +260,24 @@ Interactive font selection with live preview, modeled after =consult-theme=.
 #+BEGIN_SRC emacs-lisp :tangle yes
 
 (defun strk/dashboard-banner ()
-  "Custom ASCII art banner for dashboard."
-  (let* ((banner '(" ▗▄▄▖ ■   ▄▄▄ ▄ ▗▞▀▘█  ▄ ▄ ▄▄▄▄  ▗▞▀▜▌   ■   ▄▄▄  "
-                   "▐▌ ▗▄▟▙▄▖█    ▄ ▝▚▄▖█▄▀  ▄ █   █ ▝▚▄▟▌▗▄▟▙▄▖█   █ "
-                   " ▝▀▚▖▐▌  █    █     █ ▀▄ █ █   █        ▐▌  ▀▄▄▄▀ "
-                   "▗▄▄▞▘▐▌       █     █  █ █              ▐▌        "
-                   "     ▐▌                                 ▐▌        "
-                   "                                                  "
-                   "                                                  "))
-         (longest-line (apply #'max (mapcar #'length banner))))
-    (put-text-property
-     (point)
-     (dolist (line banner (point))
-       (insert (+doom-dashboard--center
-                +doom-dashboard--width
-                line)
-               "\n"))
-     'face 'doom-dashboard-banner)))
+  "Custom ASCII art banner for dashboard.
+Returns the banner string; `+dashboard-widget-banner' handles
+centering, alignment, padding, and the `+dashboard-banner' face."
+  (string-join
+   '(" ▗▄▄▖ ■   ▄▄▄ ▄ ▗▞▀▘█  ▄ ▄ ▄▄▄▄  ▗▞▀▜▌   ■   ▄▄▄  "
+     "▐▌ ▗▄▟▙▄▖█    ▄ ▝▚▄▖█▄▀  ▄ █   █ ▝▚▄▟▌▗▄▟▙▄▖█   █ "
+     " ▝▀▚▖▐▌  █    █     █ ▀▄ █ █   █        ▐▌  ▀▄▄▄▀ "
+     "▗▄▄▞▘▐▌       █     █  █ █              ▐▌        "
+     "     ▐▌                                 ▐▌        ")
+   "\n"))
 
-(setq +doom-dashboard-ascii-banner-fn #'strk/dashboard-banner)
+(setq +dashboard-ascii-banner-fn #'strk/dashboard-banner)
 
-(setq +doom-dashboard-functions '(doom-dashboard-widget-banner
-                                    ;; TODO I'd like to put how many TODOs are in inbox file
-                                    ;; doom-dashboard-widget-shortmenu
-                                    doom-dashboard-widget-loaded))
+
+(setq +dashboard-functions '(+dashboard-widget-banner
+                             ;; +dashboard-widget-shortmenu
+                             ;; +dashboard-widget-loaded
+  ))
 
 #+END_SRC
 
