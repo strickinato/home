@@ -502,19 +502,26 @@ in an Elm buffer or if no module declaration is found."
 #+begin_src elisp :tangle yes
 
 (use-package! elfeed-protocol
+  :after elfeed
   :config
   (setq elfeed-use-curl t)
   (setq elfeed-protocol-enabled-protocols '(fever))
   (setq elfeed-protocol-fever-update-unread-only t)
-  (setq elfeed-protocol-feeds
+  (setq elfeed-feeds
       `(("fever+https://strickinato@rss.thebad.dad"
          :username "strickinato"
          :password ,(my-get-key-strickinatorss)
          :api-url "https://rss.thebad.dad/api/fever.php"
          )))
   (elfeed-protocol-enable)
-  (add-hook 'elfeed-search-mode-hook #'elfeed-update)
-  )
+  ;; Sync in the background on a timer instead of blocking every time the
+  ;; search buffer opens (elfeed 4.0.0: `elfeed-update-background' runs on a
+  ;; timer, leaves visible windows alone, and no-ops if a sync is in flight).
+  (defvar strk/elfeed-update-timer nil
+    "Repeating timer running `elfeed-update-background'.")
+  (unless strk/elfeed-update-timer
+    (setq strk/elfeed-update-timer
+          (run-with-timer 0 (* 30 60) #'elfeed-update-background))))
 
 (defun strk/open-elfeed-entry-in-browser ()
   "Open the current elfeed entry's link in the default browser."
@@ -545,6 +552,33 @@ in an Elm buffer or if no module declaration is found."
       :desc "Open in eww"     "e" #'strk/open-elfeed-entry-in-eww
       :desc "Open in xwidget" "o" #'strk/open-elfeed-entry-in-xwidget
       :desc "Open in browser" "O" #'strk/open-elfeed-entry-in-browser)
+
+(map! :map elfeed-show-mode-map
+      :n "f" #'elfeed-show-fetch-link
+      :n "R" #'elfeed-show-readable
+      :n "Y" #'elfeed-show-yank)
+
+(map! :map elfeed-search-mode-map
+      :n "Y" #'elfeed-search-yank)
+
+#+end_src
+** EWW
+
+#+begin_src elisp :tangle yes
+
+;; (use-package! org-web-tools)
+(use-package! ghub)
+
+;; (defun strk/open-url-from-external (url)
+;;   "Open URL, dispatching based on URL type.
+;; GitHub repo URLs are opened with remoto-browse; others with org-web-tools."
+;;   (interactive "sURL: ")
+;;   (cond
+;;    ((string-match "https?://github\\.com/[^/]+/[^/]+/?$" url)
+;;     (remoto-browse url))
+;;    (t
+;;     (eww url)))
+;;   (select-frame-set-input-focus (selected-frame)))
 
 #+end_src
 
