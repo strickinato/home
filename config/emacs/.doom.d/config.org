@@ -523,6 +523,94 @@ in an Elm buffer or if no module declaration is found."
     (setq strk/elfeed-update-timer
           (run-with-timer 0 (* 30 60) #'elfeed-update-background))))
 
+;; Fever: sync read state *down* from the server (server -> local).
+;;
+;; The fever backend only ever fetches items the server still reports as
+;; unread, so it never learns when an item was read remotely -- that id simply
+;; drops out of the unread set and the entry is never revisited, leaving it
+;; stuck `unread' locally.  (Marking read locally already propagates *up* via
+;; pending-ids; this closes the reverse direction.)
+;;
+;; After each fever update, pull the authoritative unread id set and untag
+;; `unread' from every local fever entry no longer in it.  Entries queued
+;; locally as unread (`:pending-unread') are skipped so a local change that
+;; hasn't reached the server yet isn't clobbered.
+;;
+;; TODO drop this if elfeed-protocol-freshrss (greader, real two-way sync)
+;; lands in elfeed-protocol / MELPA, or if upstream teaches fever to reconcile.
+(defun strk/elfeed-protocol-fever-catchup-read (host-or-subfeed-url &rest _)
+  "Untag `unread' from local fever entries the server now considers read.
+HOST-OR-SUBFEED-URL is passed through from `elfeed-protocol-fever-update'."
+  (let* ((host-url (elfeed-protocol-host-url host-or-subfeed-url))
+         (proto-id (elfeed-protocol-fever-id host-url))
+         (url (concat (elfeed-protocol-fever--get-api-url host-url)
+                      elfeed-protocol-fever-api-unread-item-ids))
+         (data (elfeed-protocol-fever--build-data host-url)))
+    (elfeed-protocol-fever-with-fetch
+      url "POST" data
+      (let* ((raw (map-elt result 'unread_item_ids))
+             (unread (make-hash-table :test 'eql))
+             (pending (elfeed-protocol-get-pending-ids proto-id :pending-unread))
+             (untagged 0))
+        (dolist (id (mapcar #'string-to-number (split-string (or raw "") "," t)))
+          (puthash id t unread))
+        (with-elfeed-db-visit (entry _feed)
+          (when (and (elfeed-protocol-fever-entry-p entry)
+                     (memq 'unread (elfeed-entry-tags entry)))
+            (let ((id (elfeed-meta entry :id)))
+              (when (and id
+                         (not (gethash id unread))
+                         (not (member id pending)))
+                (elfeed-untag-1 entry 'unread)
+                (setq untagged (1+ untagged))))))
+        (when (> untagged 0)
+          (elfeed-db-save)
+          (elfeed-log 'info
+                      "elfeed-protocol-fever: catchup untagged %d remotely-read entries"
+                      untagged))))))
+(advice-add 'elfeed-protocol-fever-update
+            :after #'strk/elfeed-protocol-fever-catchup-read)
+
+;; Workaround for "Error running timer 'url-queue-check-progress': (error
+;; \"Marker does not point anywhere\")" spam in *Messages*.  When an async image
+;; fetch finishes after its elfeed-show buffer was re-rendered/replaced, the
+;; START/END markers no longer point anywhere, and elfeed's own `(> end start)'
+;; guard throws on them.  This :override is upstream's `elfeed-insert-html'
+;; verbatim, plus a marker-validity check before the comparison.
+;; TODO remove once the upstream fix for bug#80945 / elfeed#550 fully lands.
+(defun strk/elfeed-insert-html (html &optional base-url)
+  "Convert HTML markup to a propertized string; links relative to BASE-URL."
+  (let ((doc (if (libxml-available-p)
+                 (with-temp-buffer
+                   (when base-url
+                     (insert (format "<base href=\"%s\">" base-url)))
+                   (insert html)
+                   (libxml-parse-html-region (point-min) (point-max) base-url))
+               '(i () "Elfeed: libxml2 functionality is unavailable"))))
+    (run-hook-wrapped 'elfeed-transform-html-functions
+                      (lambda (hook)
+                        (setq doc (funcall hook doc))
+                        nil))
+    (cl-letf* ((orig (symbol-function 'url-queue-retrieve))
+               ((symbol-function 'url-queue-retrieve)
+                (lambda (url cb &rest args)
+                  (let ((cb (if (eq cb #'shr-image-fetched)
+                                (lambda (status buffer start end &rest args)
+                                  (when (and start end
+                                             ;; skip if a marker no longer
+                                             ;; points anywhere (stale fetch)
+                                             (or (not (markerp start))
+                                                 (marker-buffer start))
+                                             (or (not (markerp end))
+                                                 (marker-buffer end))
+                                             (> end start))
+                                    (apply #'shr-image-fetched
+                                           status buffer start end args)))
+                              cb)))
+                    (apply orig url cb args)))))
+      (shr-insert-document doc))))
+(advice-add 'elfeed-insert-html :override #'strk/elfeed-insert-html)
+
 (defun strk/open-elfeed-entry-in-browser ()
   "Open the current elfeed entry's link in the default browser."
   (interactive)
