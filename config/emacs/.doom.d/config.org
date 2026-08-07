@@ -883,6 +883,30 @@ Configuration for my org-mode inbox file synced via iCloud and Plain Org iOS app
 (use-package! vulpea-journal
   :after vulpea
   :config
+
+  (defun strk/vulpea-journal-buffer-p ()
+    "Return non-nil if the current buffer's file is a vulpea journal note."
+    (and (buffer-file-name)
+        (derived-mode-p 'org-mode)
+        (member vulpea-journal-tag
+                (save-excursion
+                    (goto-char (point-min))
+                    (vulpea-buffer-tags-get)))))
+
+  (defun strk/vulpea-journal-next ()
+    "Go to next journal entry, only when in a journal buffer."
+    (interactive)
+    (if (strk/vulpea-journal-buffer-p)
+        (call-interactively #'vulpea-journal-next)
+        (user-error "Not in a vulpea journal buffer")))
+
+  (defun strk/vulpea-journal-previous ()
+    "Go to previous journal entry, only when in a journal buffer."
+    (interactive)
+    (if (strk/vulpea-journal-buffer-p)
+        (call-interactively #'vulpea-journal-previous)
+        (user-error "Not in a vulpea journal buffer")))
+
   (setq vulpea-journal-default-template
         (vulpea-journal-template-daily
          :file-name "journal/%Y-%m-%d.org"
@@ -891,10 +915,14 @@ Configuration for my org-mode inbox file synced via iCloud and Plain Org iOS app
   (map!
    :leader
    :desc "Open journal" :gn "d d" #'vulpea-journal-today
+   :desc "Previous journal" :gn "d j" #'strk/vulpea-journal-previous
+   :desc "Next journal" :gn "d k" #'strk/vulpea-journal-next
    :desc "Journal by date" :gn "d D" #'vulpea-journal-date)
-  (map! :map vulpea-journal-mode-map
-        :n "] d" #'vulpea-journal-next
-        :n "[ d" #'vulpea-journal-previous))
+
+  (advice-add 'vulpea-journal :around
+              (lambda (orig-fn &rest args)
+                (cl-letf (((symbol-function 'vulpea-ui-sidebar-open) #'ignore))
+                  (apply orig-fn args)))))
 
 #+end_src
 
