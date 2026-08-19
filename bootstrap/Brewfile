@@ -28,6 +28,8 @@ brew "emacs-plus@31", args: ["with-imagemagick", "with-xwidgets"]
 
 
 cask "alfred"
+tap "y3owk1n/tap"
+cask "y3owk1n/tap/neru"
 cask "bitwarden"
 cask "hammerspoon"
 cask "ghostty"
