@@ -37,9 +37,9 @@ text = "#FFFFFF"
 # See https://github.com/y3owk1n/neru/blob/main/docs/CONFIGURATION.md#hotkeys
 # See https://github.com/y3owk1n/neru/blob/main/docs/CLI.md
 [hotkeys]
-"Primary+Shift+J" = "hints"
-"Primary+Shift+G" = "grid"
-"Primary+Shift+K" = "recursive_grid"
+"Primary+Shift+J" = "hints --toggle"
+# "Primary+Shift+G" = "grid"
+"Primary+Shift+K" = "recursive_grid --toggle"
 "Primary+Ctrl+Alt+Shift+L" = "scroll"
 
 # Hint mode
