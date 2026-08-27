@@ -950,22 +950,14 @@ Configuration for my org-mode inbox file synced via iCloud and Plain Org iOS app
 #+begin_src elisp :tangle yes
 
 (defun strk/brain-agenda-files ()
-  "Collect org-agenda files from ~/brain, excluding Archive and hidden directories."
-  (let ((excluded-dirs (regexp-opt '("Archive" ".obsidian" ".sync" ".stfolder" "${hyperb:dir}"))))
+  "Collect org-agenda files from ~/brain, excluding archive and hidden directories."
+  (let ((excluded-dirs (regexp-opt '("archive" ".obsidian" ".sync" ".stfolder" "${hyperb:dir}"))))
     (append
-     ;; Flat directories — org-agenda handles these dynamically
      (list (expand-file-name "~/brain/")
            (expand-file-name "~/brain/journal/")
            (expand-file-name "~/brain/notes/"))
-     ;; Recursive directories — static at startup
      (directory-files-recursively
-      (expand-file-name "~/brain/Projects/") "\\.org$" nil
-      (lambda (dir) (not (string-match-p excluded-dirs dir))))
-     (directory-files-recursively
-      (expand-file-name "~/brain/Areas/") "\\.org$" nil
-      (lambda (dir) (not (string-match-p excluded-dirs dir))))
-     (directory-files-recursively
-      (expand-file-name "~/brain/Resources/") "\\.org$" nil
+      (expand-file-name "~/brain/projects/") "\\.org$" nil
       (lambda (dir) (not (string-match-p excluded-dirs dir)))))))
 
 (after! org
