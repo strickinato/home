@@ -497,6 +497,32 @@ in an Elm buffer or if no module declaration is found."
   (setq syncthing-default-server-token (my-get-key-syncthing)))
 
 #+end_src
+** Magit
+This is super useful for working on something while working on something else.
+
+#+begin_src elisp :tangle yes
+
+(defun strk/magit-pull-origin-main-rebase (args)
+  "Pull origin/main using the rebase mode selected in Magit's pull popup."
+  (interactive (list (magit-pull-arguments)))
+  (run-hooks 'magit-credential-hook)
+  (magit-run-git-with-editor "pull" args "origin" "main"))
+
+(defun strk/magit-push-set-upstream ()
+  "Push current branch to origin, setting it as upstream."
+  (interactive)
+  (run-hooks 'magit-credential-hook)
+  (let ((branch (or (magit-get-current-branch)
+                    (user-error "No current branch"))))
+    (magit-run-git-async "push" "--set-upstream" "origin" branch)))
+
+(after! magit
+  (transient-append-suffix 'magit-pull "e"
+    '("o" "origin/main (rebase)" strk/magit-pull-origin-main-rebase))
+  (transient-append-suffix 'magit-push "u"
+    '("U" "origin, set upstream" strk/magit-push-set-upstream)))
+
+#+end_src
 * WEB
 ** RSS
 #+begin_src elisp :tangle yes
