@@ -499,6 +499,83 @@ in an Elm buffer or if no module declaration is found."
 #+end_src
 ** Magit
 This is super useful for working on something while working on something else.
+*** Branch selection
+
+When selecting a branch - this sets up 2 things.
+
+1. It uses magit's sort by `-committerdate` to look at recent branches
+2. It advises marginalia around in order to get additional information about the branches
+
+#+begin_src elisp :tangle yes
+
+;; Show branches with the most recently committed-to branches first.
+(setq magit-list-refs-sortby "-committerdate")
+
+(defvar strk/magit-ref-annotations nil
+  "Commit annotations for the active Magit revision prompt.")
+
+(defun strk/magit-build-ref-annotations ()
+  "Return a table mapping branch names to abbreviated SHAs and subjects."
+  (let ((table (make-hash-table :test #'equal)))
+    (dolist (line (magit-git-lines
+                   "for-each-ref"
+                   "--format=%(refname:short)\t%(objectname:short)\t%(subject)"
+                   "refs/heads" "refs/remotes"))
+      (let ((fields (split-string line "\t")))
+        (when (>= (length fields) 3)
+          (puthash (nth 0 fields)
+                   (cons (nth 1 fields)
+                         (string-join (nthcdr 2 fields) "\t"))
+                   table))))
+    table))
+
+(defun strk/magit-completing-read-with-annotations
+    (fn prompt collection &optional predicate require-match initial-input
+        history default fallback)
+  "Add cached ref annotations around Magit revision completion via FN."
+  (let ((strk/magit-ref-annotations
+         (and (eq history 'magit-revision-history)
+              (strk/magit-build-ref-annotations))))
+    (funcall fn prompt collection predicate require-match initial-input
+             history default fallback)))
+
+(defun strk/marginalia-classify-magit-revision ()
+  "Classify Magit revision completion for Marginalia."
+  (when (eq minibuffer-history-variable 'magit-revision-history)
+    'strk-magit-revision))
+
+(defun strk/marginalia-annotate-magit-revision (candidate)
+  "Annotate branch CANDIDATE with its abbreviated SHA and commit subject."
+  (when-let ((data (and strk/magit-ref-annotations
+                        (gethash candidate strk/magit-ref-annotations))))
+    (marginalia--fields
+     ((car data) :width 9 :face 'magit-hash)
+     ((cdr data) :truncate 0.5 :face 'font-lock-comment-face))))
+
+(after! magit
+  (advice-add 'magit-completing-read :around
+              #'strk/magit-completing-read-with-annotations))
+
+(with-eval-after-load 'marginalia
+  (add-to-list 'marginalia-classifiers
+               #'strk/marginalia-classify-magit-revision)
+  (add-to-list 'marginalia-annotators
+               '(strk-magit-revision
+                 strk/marginalia-annotate-magit-revision builtin none)))
+
+#+end_src
+
+*** Rebase on fresh main
+
+When I'm on a branch, and I want to rebase it on a freshly pulled version of main.
+It's the equivalent of:
+
+#+begin_src sh :tangle no
+git checkout main
+git pull
+git checkout <my-branch>
+git rebase main
+#+end_src
 
 #+begin_src elisp :tangle yes
 
@@ -507,6 +584,22 @@ This is super useful for working on something while working on something else.
   (interactive (list (magit-pull-arguments)))
   (run-hooks 'magit-credential-hook)
   (magit-run-git-with-editor "pull" args "origin" "main"))
+
+(after! magit
+  ;; The origin/main pull command below respects branch.<name>.rebase unless
+  ;; the pull popup supplies an explicit rebase argument.
+  (transient-suffix-put 'magit-branch-configure 'magit-branch.<branch>.rebase
+                        :default "true")
+  (transient-append-suffix 'magit-pull [1 -1]
+    '("o" "origin/main (rebase)" strk/magit-pull-origin-main-rebase))
+  )
+#+end_src
+
+*** Push set upstream
+
+When I'm pushing a branch, automatically use --set-upstream so I don't have to choose it.
+
+#+begin_src elisp :tangle yes
 
 (defun strk/magit-push-set-upstream ()
   "Push current branch to origin, setting it as upstream."
@@ -517,12 +610,28 @@ This is super useful for working on something while working on something else.
     (magit-run-git-async "push" "--set-upstream" "origin" branch)))
 
 (after! magit
-  (transient-append-suffix 'magit-pull "e"
-    '("o" "origin/main (rebase)" strk/magit-pull-origin-main-rebase))
   (transient-append-suffix 'magit-push "u"
     '("U" "origin, set upstream" strk/magit-push-set-upstream)))
 
 #+end_src
+
+*** Reset last commit
+
+Undo the last commit while keeping all of its changes staged.
+
+#+begin_src elisp :tangle yes
+
+(defun strk/magit-undo-last-commit ()
+  "Undo the last commit, keeping its changes staged."
+  (interactive)
+  (magit-reset-soft "HEAD~1"))
+
+(after! magit
+  (transient-append-suffix 'magit-reset "f"
+    '("l" "last commit (soft)" strk/magit-undo-last-commit)))
+
+#+end_src
+
 * WEB
 ** RSS
 #+begin_src elisp :tangle yes
