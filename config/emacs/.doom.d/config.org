@@ -1178,7 +1178,7 @@ Configuration for my org-mode inbox file synced via iCloud and Plain Org iOS app
   (find-file strk/work-todo-file))
 
 (map! :leader
-      :desc "Work tasks" :gn "d t" #'strk/open-work-todo)
+      :desc "Work tasks" :gn "d w" #'strk/open-work-todo)
 
 (after! org-agenda
   (add-to-list 'org-agenda-custom-commands
