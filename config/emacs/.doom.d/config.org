@@ -898,6 +898,89 @@ HOST-OR-SUBFEED-URL is passed through from `elfeed-protocol-fever-update'."
    :map agent-shell-viewport-edit-mode-map
    :gn "C-j" #'my/agent-shell-viewport-back
    :gn "C-k" #'my/agent-shell-viewport-forward)
+
+
+  (defun strk/agent-shell--project-label (shell-buffer)
+    "Return the project name for SHELL-BUFFER, or \"*TEMP*\" for temp shells."
+    (with-current-buffer shell-buffer
+      (if (string-prefix-p (file-name-as-directory
+                            (expand-file-name temporary-file-directory))
+                           (expand-file-name default-directory))
+          "*TEMP*"
+        (agent-shell--project-name))))
+
+  (defun strk/agent-shell--last-prompt (shell-buffer)
+    "Return the most recent prompt (first line) in SHELL-BUFFER, or nil.
+Falls back to the session title when no completed exchange exists yet."
+    (with-current-buffer shell-buffer
+      (or (when-let* ((history (ignore-errors (shell-maker-history)))
+                      (command (car (last (delq nil (mapcar #'car history))))))
+            (substring-no-properties
+             (car (split-string (string-trim command) "\n" t))))
+          (let ((title (string-trim
+                        (or (map-nested-elt (agent-shell--state)
+                                            '(:session :title))
+                            ""))))
+            (unless (string-empty-p title) title)))))
+
+  ;; Each field is a marginalia column (aligned, faced) rather than one
+  ;; concatenated annotation string.  Registered under a dedicated category
+  ;; so marginalia uses this annotator instead of its built-in `buffer' one.
+  (defun strk/agent-shell--annotate (candidate)
+    "Marginalia columns for CANDIDATE: status, project, most recent prompt."
+    (let ((status (get-text-property 0 'strk-status candidate))
+          (project (get-text-property 0 'strk-project candidate))
+          (prompt (get-text-property 0 'strk-prompt candidate)))
+      (marginalia--fields
+       ((symbol-name (or status 'ready))
+        :width 8
+        :face (pcase status ('busy 'warning) ('blocked 'error) (_ 'success)))
+       ((or project "")
+        :width 22 :truncate 22 :face 'font-lock-keyword-face)
+       ((or prompt "")
+        :truncate 0.5 :face 'font-lock-comment-face))))
+
+  (with-eval-after-load 'marginalia
+    (add-to-list 'marginalia-annotators
+                 '(strk-agent-shell strk/agent-shell--annotate builtin none)))
+
+  (defun strk/consult-agent-shell ()
+    "Select an active agent-shell session and jump to its viewport buffer.
+Marginalia shows the session status, its project (or *TEMP* for a
+temporary shell), and the most recent prompt as aligned columns."
+    (interactive)
+    (let* ((buffers (or (agent-shell-buffers)
+                        (user-error "No agent-shell buffers")))
+           (candidates
+            (mapcar
+             (lambda (buffer)
+               (propertize (buffer-name buffer)
+                           'strk-buffer buffer
+                           'strk-status (agent-shell-status :shell-buffer buffer)
+                           'strk-project (strk/agent-shell--project-label buffer)
+                           'strk-prompt (strk/agent-shell--last-prompt buffer)))
+             buffers))
+           ;; `:lookup' resolves to the viewport buffer so consult previews
+           ;; the rendered conversation as you move through candidates, and
+           ;; the same buffer is the jump target on selection.
+           (buffer (consult--read
+                    candidates
+                    :prompt "Agent shell: "
+                    :sort nil
+                    :require-match t
+                    :category 'strk-agent-shell
+                    :state (consult--buffer-preview)
+                    :lookup (lambda (selected cands &rest _)
+                              (when-let* ((cand (car (member selected cands)))
+                                          (shell (get-text-property 0 'strk-buffer cand)))
+                                (or (agent-shell-viewport--buffer
+                                     :shell-buffer shell :existing-only t)
+                                    shell))))))
+      (when (buffer-live-p buffer)
+        (switch-to-buffer buffer))))
+
+  (map! :leader
+        :desc "Agent shells" :gn "o l a" #'strk/consult-agent-shell)
 )
 
 #+end_src
