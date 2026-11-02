@@ -631,6 +631,24 @@ Undo the last commit while keeping all of its changes staged.
     '("l" "last commit (soft)" strk/magit-undo-last-commit)))
 
 #+end_src
+** Projectile Config
+
+It's really annoying when I accidentally run `spc p p` and am in my homedir or somewhere like that. This blocks find file from being run from home - where it indexes everything.
+
+#+begin_src elisp :tangle yes
+
+(defun strk/projectile-refuse-home (&rest _)
+  "Refuse an operation when the current directory is home."
+  (when (and default-directory
+             (not (file-remote-p default-directory))
+             (file-equal-p default-directory (expand-file-name "~/")))
+    (user-error "Projectile won't run in my home dir")))
+
+(with-eval-after-load 'projectile
+  (advice-add 'projectile-find-file :before
+              #'strk/projectile-refuse-home))
+
+#+end_src
 
 * WEB
 ** RSS
