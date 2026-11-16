@@ -98,7 +98,6 @@
 (package! vulpea-ui)
 (package! vulpea-journal)
 
-(package! ghub)
 
 
 

@@ -804,24 +804,23 @@ HOST-OR-SUBFEED-URL is passed through from `elfeed-protocol-fever-update'."
 
 #+end_src
 ** EWW
+*** Copy shr buffers as Org
+This is useful when I'm reading elfeed. When something is a link and I want to copy it to an org file - because shr embeds the link in the face, link isn't copied! This makes it so that yanking the text automatically converts it to org format.
 
-#+begin_src elisp :tangle yes
+#+BEGIN_SRC elisp :tangle yes
+(after! org
+  (require 'ol-eww))
 
-;; (use-package! org-web-tools)
-(use-package! ghub)
+(after! eww
+  (map! :map eww-mode-map
+        :v "y" #'org-eww-copy-for-org-mode
+        :n "Y" #'org-eww-copy-for-org-mode))
 
-;; (defun strk/open-url-from-external (url)
-;;   "Open URL, dispatching based on URL type.
-;; GitHub repo URLs are opened with remoto-browse; others with org-web-tools."
-;;   (interactive "sURL: ")
-;;   (cond
-;;    ((string-match "https?://github\\.com/[^/]+/[^/]+/?$" url)
-;;     (remoto-browse url))
-;;    (t
-;;     (eww url)))
-;;   (select-frame-set-input-focus (selected-frame)))
-
-#+end_src
+(after! elfeed-show
+  (map! :map elfeed-show-mode-map
+        :v "y" #'org-eww-copy-for-org-mode
+        :n "Y" #'org-eww-copy-for-org-mode))
+#+END_SRC
 
 * LLMs
 ** Agent Shell
