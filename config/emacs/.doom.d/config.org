@@ -1181,6 +1181,17 @@ Configuration for my org-mode inbox file synced via iCloud and Plain Org iOS app
       (setq org-download-link-format-function #'org-download-link-format-function-default))
 
 #+end_src
+(defconst strk/main-todo-file (expand-file-name "~/brain/todo.org")
+  "Org file containing tasks.")
+
+(defun strk/open-main-todo ()
+  "Open the work task file, creating its parent directory if necessary."
+  (interactive)
+  (make-directory (file-name-directory strk/main-todo-file) t)
+  (find-file strk/main-todo-file))
+
+(map! :leader
+      :desc "TASKS" :gn "d t" #'strk/open-main-todo)
 
 ** Work
 #+begin_src emacs-lisp :tangle yes
